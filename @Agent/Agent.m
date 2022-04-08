@@ -15,6 +15,7 @@ classdef Agent < handle
         x = [];              % current position
         x_e = [NaN; NaN];    % end point for trajectory
         head_ang = NaN;      % current heading angle [0 2*pi)
+        comm_dist = 2;       % communication radius
         
     end % properties
 
@@ -33,7 +34,6 @@ classdef Agent < handle
         setInitialPos(obj)                    % initializes agent on boundary, sets x_o and x
         genHeadingAngle(obj, rounding);       % generates new random heading angle for agent, sets head_ang
         findEndpoint(obj);                    % uses agent position and random heading to find endpoint of linear trajectory, sets x_e
-        iterateOverPath(obj);                 % uses start point and endpoint to define path
         runAgent(obj, sim_itr);
         
     end % methods

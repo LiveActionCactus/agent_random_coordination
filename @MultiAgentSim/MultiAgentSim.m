@@ -2,6 +2,10 @@ classdef MultiAgentSim < handle
     %MULTIAGENTSIM runs the simulation of n agents within a specified
     %region
 
+    %
+    % ALL ANGLES ROUNDED TO 0.1 RADIANS; ALL POSITIONS TO 0.01
+    %
+
     % https://www.mathworks.com/help/matlab/matlab_oop/class-constructor-methods.html
     % https://gamemath.com/book/geomtests.html#closest_point_aabb
 
@@ -10,14 +14,15 @@ classdef MultiAgentSim < handle
     %
 
     properties
-        boundary = [0 20; 0 20];  % matrix defining agent boundaries
-        centroid = NaN;
+        %boundary = [0 20; 0 20];  % matrix defining agent boundaries
+        boundary = [0 100; 0 100];  % matrix defining agent boundaries
         initial_posns = [];       % initial position of gliders, may be blank
         numAgents = NaN;
         agents = {};              % array of agent objects
-        n = NaN;                    % simulation time step
-        N = NaN;                    % total steps in simulation (sim size)
-        sim_itrs = NaN
+        n = NaN;                  % simulation time step
+        N = NaN;                  % total steps in simulation (sim size)
+        sim_itrs = NaN;           % number of simulations to run
+        sim_conn_data = {};       % stored adjacency matrices inidicating comms connections
     
     end % properties
 
@@ -27,7 +32,6 @@ classdef MultiAgentSim < handle
                 error("No agents in simulation!");
             end
             
-            obj.centroid = 0.5 * obj.boundary(:, end);  % TODO: generalize method of finding centroid of a convex polygon (https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon)
             obj.n = 1;                          % initialize first time index to 1
             obj.N = N;                          % set max sim duration
             obj.sim_itrs = sim_itrs;
@@ -40,8 +44,11 @@ classdef MultiAgentSim < handle
         initializeAgents(obj);
         initializeLogging(obj);
         resetAgents(obj);
-        runSim(obj, sim_num, plot_paths);
+        runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance);
+        genSimStepDistanceMatrix(obj, sim_step);
+        genTotalSimDistanceMatrix(obj, sim_itr);
         plotAgentPaths(obj, sim_itr);
+        plotSimStepDistanceComms(obj)
 
     end % end methods
     

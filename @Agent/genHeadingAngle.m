@@ -21,12 +21,7 @@ function genHeadingAngle(obj, rounding)
         disp('Curr pos not same size as [1 0]')
     end
 
-    curr_ang = acos(dot(curr_pos, [1; 0]) / (norm(curr_pos) * norm([1; 0]))); % returns values between [0, pi] wrt x-basis vector
-    if isnan(curr_ang)
-        curr_ang = 0;
-    end
-    
-    side = findConvexSide(sides, curr_ang); % counts sides starting at 0 indexing up traveling CCW
+    side = MultiAgentSim.findConvexSide(sides, curr_pos); % counts sides starting at 0 indexing up traveling CCW
     
     eps = 1e-2;             % prevent agents from hugging perimeter
     

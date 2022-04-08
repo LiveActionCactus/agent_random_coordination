@@ -44,8 +44,8 @@ function findEndpoint(obj)
     t_temp1 = (u_temp1(1,:) .* s_vec(2,:)) - (u_temp1(2,:) .* s_vec(1,:));
     t = t_temp1 ./ deno;
     
-    x1 = p + (t .* r);
-    x2 = q_vec + (u .* s_vec);
+    x1 = round((p + (t .* r)), 2);
+    x2 = round((q_vec + (u .* s_vec)), 2);
     
     if(sum((abs(x2 - x1) < 10e-2), 'all'))
         x1(:,(obj.side_o+1)) = [inf; inf];
@@ -54,13 +54,9 @@ function findEndpoint(obj)
         idx = find(sum(test) >= 2);
         obj.x_e = x1(:,idx);
 
-        if isempty(idx)
-            error('No intersection solution found!... but inside loop... F')
-        end
-
-        %
-        % TEST TEST TEST
-        % 
+        % if numerical issues cause more than one intersection solution,
+        % choose the one that is furthest away (we see that we are 
+        % choosing between current position and desired solution (further).
         if length(idx) > 1
             dist = zeros(1,length(idx));
             for i = 1:length(idx)
@@ -70,31 +66,27 @@ function findEndpoint(obj)
             [m, ix] = max(dist);         % returns max distance and index of that value
             obj.x_e = x1(:,idx(ix));          % endpoint is the furthest away point
                 
-%             disp(x2)
-%             disp(obj.head_ang)
-%             disp(obj.x_o)
-%             disp(x1)
-%             disp(test)
-%             disp(idx)
-%             disp(obj.x)
-%             disp((obj.x - x1(:,idx(1,i))).^2)
-%             disp(dist)
-%             disp(obj.x_e)
-%             disp(ix)
-%             disp(m)
-%             disp('Non-unique endpoint solution')
-%             pause
-            
-        end % end if non-unique endpoint solution (probably numerical issues)
-        %
-        % END TEST
-        %
+        end % end if non-unique endpoint solution
+
+        % TODO: handle empty idx; causes error in 1 of 20k sims
+        % if numerical issues leave idx empty we need to do a brute-force
+        % search of all sides
+        if isempty(idx)
+            disp(obj.side_o)
+            disp(obj.x)
+            disp(x1)
+            disp(x2)
+            disp(test)
+            error('No intersection solution found!... but inside loop... F')
+        end
+
     else
         error('No valid intersection found for possible trajectories')
     end % end if intersection solution exists
 
     %
     % TEST TEST TEST
+    % trying to capture highly unlikely errors (less than 1 in 10k sims...)
     %
     [r, c] = size(obj.x_e);
     if c > 1
@@ -117,5 +109,7 @@ function findEndpoint(obj)
     %
     % END TEST
     %
+
+    obj.x_e = round(obj.x_e, 2);
 
 end % end findEnpoint
