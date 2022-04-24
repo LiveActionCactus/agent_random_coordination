@@ -14,8 +14,7 @@ classdef MultiAgentSim < handle
     %
 
     properties
-        %boundary = [0 20; 0 20];  % matrix defining agent boundaries
-        boundary = [0 100; 0 100];  % matrix defining agent boundaries
+        boundary = [];            % matrix defining vertices of sim boundaries; must be convex covering
         initial_posns = [];       % initial position of gliders, may be blank
         numAgents = NaN;
         agents = {};              % array of agent objects
@@ -27,7 +26,7 @@ classdef MultiAgentSim < handle
     end % properties
 
     methods
-        function obj = MultiAgentSim(numAgents, N, sim_itrs)
+        function obj = MultiAgentSim(bounds, numAgents, N, sim_itrs)
             if numAgents == 0
                 error("No agents in simulation!");
             end
@@ -35,6 +34,7 @@ classdef MultiAgentSim < handle
             obj.n = 1;                          % initialize first time index to 1
             obj.N = N;                          % set max sim duration
             obj.sim_itrs = sim_itrs;
+            obj.boundary = bounds;              % vertices of convex boundary % TODO: make this support all convex shapes, not just square
             obj.numAgents = numAgents;
             obj.initializeAgents();             % writes Agent objects to first row of obj.agents
             obj.initializeLogging();            % writes 3xN zero-array to second row of obj.agents
@@ -44,11 +44,12 @@ classdef MultiAgentSim < handle
         initializeAgents(obj);
         initializeLogging(obj);
         resetAgents(obj);
-        runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance);
-        genSimStepDistanceMatrix(obj, sim_step);
+        [ssd_plot, ssd_conn_data, itr_comm_plot, agent_path_plot] = runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance);
+        ssd_conn_data = genSimStepDistanceMatrix(obj, sim_step);
         genTotalSimDistanceMatrix(obj, sim_itr);
-        plotAgentPaths(obj, sim_itr);
-        plotSimStepDistanceComms(obj)
+        agent_path_plot = plotAgentPaths(obj, sim_itr);
+        ssd_plot = plotSimStepDistanceComms(obj);
+        itr_comm_plot = plotSimItrAveDistComms(obj);
 
     end % end methods
     

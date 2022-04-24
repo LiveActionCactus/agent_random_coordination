@@ -1,7 +1,12 @@
-function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance)
+function [ssd_plot, ssd_conn_data, itr_comm_plot, agent_path_plot] = runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance)
 %RUNSIM run one time-step of the simulation
 
-    plot_freq = 1000;           % modulus base for print/plot frequency
+    ssd_plot = 0;
+    ssd_conn_data = 0;
+    itr_comm_plot = 0; 
+    agent_path_plot = 0;
+    
+    plot_freq = 3000;           % modulus base for print/plot frequency
 
     % run iteration in the multi-start monte-carlo simulations
     for i = 1:obj.sim_itrs
@@ -16,13 +21,13 @@ function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim
     
             % Generate distance matrix for each step of the sim
             if gen_sim_step_dist
-                obj.genSimStepDistanceMatrix(n);
+                ssd_conn_data = obj.genSimStepDistanceMatrix(n);
             end
        
         end % end for step in sim size
 
         if plot_sim_step_distance && gen_sim_step_dist
-            obj.plotSimStepDistanceComms();
+            ssd_plot = obj.plotSimStepDistanceComms();
         end
 
         % Generate distance matrix for each iteration of the multi-start
@@ -35,10 +40,10 @@ function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim
         % Plot agent paths every i-th iteration of the multi-start case for
         % the simulation
         if mod(i,plot_freq) == 0
-            fprintf("Sim %i Complete \n", i)
+            %fprintf("Sim %i Complete \n", i)
 
             if plot_paths
-                obj.plotAgentPaths(i);     % plot every n-th sim
+                agent_path_plot = obj.plotAgentPaths(i);     % plot every n-th sim
             end
         
         end % end if every mod-th sim run
@@ -46,5 +51,9 @@ function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim
         obj.resetAgents();          % reset Agent properties for simulation restartS
     
     end % end "sim_itrs"-times multi-start simulations
-
+    
+    if gen_total_sim_dist
+        itr_comm_plot = obj.plotSimItrAveDistComms();
+    end
+    
 end % end runSim

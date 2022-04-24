@@ -1,4 +1,4 @@
-function genSimStepDistanceMatrix(obj, sim_step)
+function ssd_conn_data = genSimStepDistanceMatrix(obj, sim_step)
 %GENSIMSTEPDISTANCEMATRIX generate a distance matrix for each step of a
 %single simulation iteration, keep a running average.
 
@@ -25,5 +25,7 @@ function genSimStepDistanceMatrix(obj, sim_step)
         obj.sim_conn_data{3,1} = dist_mat + obj.sim_conn_data{3,1};                                                   % cumulative connections
         obj.sim_conn_data{3,2} = ( dist_mat + ((sim_step-1).*obj.sim_conn_data{3,2}) ) ./ sim_step;                   % cumulative average of conns
     end
+
+    ssd_conn_data = {obj.sim_conn_data{3,1}, obj.sim_conn_data{3,2}};
 
 end % end genSimStepDistanceMatrix

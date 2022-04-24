@@ -16,15 +16,7 @@
 % - [DONE] average the multi-start adjacency matrix against start itrs
 
 
-% TODO: ***build out SimAnalysis class and run various instances of that w/
-% nice MATLAB formatting and create pdf doc ***
-% TODO: approx 1 in 5k times the agent path will leave boundaries...
-% TODO: plot the averaged plotSimStepDistanceComms over multi-start itrs
-% [NOT SURE IF THIS TELLS ME ANYTHING NEW]
-% TODO: find min, max, ave, and variance for a sim (use multi-start
-% results)
 % TODO: find the oldest comms and which agent has it
-% TODO: visualize graph dynamics over a single run
 % TODO: find Markov Decision Process that represents different #-agent
 % cases for fixed boundaries
 % TODO: explore using Jacobian to alter distribution of random heading
@@ -33,6 +25,13 @@
 % TODO: generalize for any symmetric convex shape
 % TODO: generalize for any convex shape, including asymmetric ones
 
+% [DONE] ***build out SimAnalysis class and run various instances of that w/
+% nice MATLAB formatting and create pdf doc ***
+% [DONE]: approx 1 in 5k times the agent path will leave boundaries...
+% [DONE]: visualize graph dynamics over a single run
+% [DONE] plot the averaged plotSimStepDistanceComms over multi-start itrs
+% [DONE] find min, max, ave, and variance for a sim (use multi-start
+% results)
 
 % Version 2.0
 % track the adjacent quadrants of each agent (function of communication
@@ -46,14 +45,18 @@ close all
 clear all
 clc
 
-testSim = MultiAgentSim(4, 240, 1000);     % n agents; steps in sim; num sims
+bounds = [0 30; 0 10];
+testSim = MultiAgentSim(bounds, 4, 240,1000);     % boundary vertices; n agents; steps in sim; num sims
+%testSim = MultiAgentSim(bounds, 25, 7000,1);
 
 % runSim() parameters -- (1/0; yes/no);
-% 1) plot graphs
+% 1) plot graphs; triangle is init pos / square is end pos
 % 2) generate distance matrix for each step of a single sim iteration
 % 3) generate distance matrix for each iteration of the multi-start and average all
 % 4) plot communication cumulative ave for single simulation case
-testSim.runSim(1,0,1,0);                  % 2&4 run together, can't run with 3
+
+testSim.runSim(1,0,1,0);
+%testSim.runSim(1,1,0,1);                  % 2&4 run together, can't run with 3
 
 disp('Done')
 
