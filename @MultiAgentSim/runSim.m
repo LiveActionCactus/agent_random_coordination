@@ -6,7 +6,7 @@ function [ssd_plot, ssd_conn_data, itr_comm_plot, agent_path_plot] = runSim(obj,
     itr_comm_plot = 0; 
     agent_path_plot = 0;
     
-    plot_freq = 3000;           % modulus base for print/plot frequency
+    plot_freq = 1;           % modulus base for print/plot frequency
 
     % run iteration in the multi-start monte-carlo simulations
     for i = 1:obj.sim_itrs
