@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>square_analysis</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-04-24"><meta name="DC.source" content="square_analysis.m"><style type="text/css">
+      --><title>square_analysis</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-04-29"><meta name="DC.source" content="square_analysis.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Communication at Opportunity Sim -- Square Boundary Analysis</a></li><li><a href="#2">General Analysis -- Infinite path length, single iteration simulations</a></li><li><a href="#3">4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box</a></li><li><a href="#4">4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box</a></li><li><a href="#5">4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box</a></li><li><a href="#6">General Analysis -- 240 path length, multi-start simulations</a></li><li><a href="#7">4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box</a></li><li><a href="#8">4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box</a></li><li><a href="#9">4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box</a></li></ul></div><h2 id="1">Communication at Opportunity Sim -- Square Boundary Analysis</h2><p>By: Patrick Ledzian Date: 10 April 2022</p><pre class="codeinput"><span class="comment">% Overview:</span>
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Communication at Opportunity Sim -- Square Boundary Analysis</a></li><li><a href="#2">General Analysis -- Infinite path length, single iteration simulations</a></li><li><a href="#3">4, 8, 16, 32 Agent Inf Horizon Test in 10x10 Box</a></li><li><a href="#4">4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box</a></li><li><a href="#5">4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box</a></li><li><a href="#6">4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box</a></li><li><a href="#7">General Analysis -- 240 path length, multi-start simulations</a></li><li><a href="#8">4, 8, 16, 32 Agent Multi-Start Test in 10x10 Box</a></li><li><a href="#9">4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box</a></li><li><a href="#10">4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box</a></li><li><a href="#11">4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box</a></li></ul></div><h2 id="1">Communication at Opportunity Sim -- Square Boundary Analysis</h2><p>By: Patrick Ledzian Date: 10 April 2022 Last update: 24 April 2022</p><pre class="codeinput"><span class="comment">% Overview:</span>
 <span class="comment">% Generate simulation data to provide insight as to how often agents</span>
 <span class="comment">% interact when bouncing around in a closed, axis-aligned square boundary.</span>
 <span class="comment">% Each agent chooses a new random heading (uniform distribution [0, pi)])</span>
@@ -83,8 +83,8 @@ clear <span class="string">all</span>
 clc
 
 a = SimAnalysis();
-</pre><h2 id="2">General Analysis -- Infinite path length, single iteration simulations</h2><p>With square axis-aligned boundaries the chance of random communication between non-coordinating agents appears to be stationary with-respect-to the number of agents. However, the transients behavior (rise-time) is shorter the more agents that are present. Also note that as the area of the boundaries increases the chance of communication goes down. A target for future work is to intelligently manipulate the distribution agents choose new random headings from, maybe from local interactions (comms). This should also be balanced with the transient (rise-time) behavior to meet mission needs (vehicle specs, on-scene time, power management, etc).</p><pre class="codeinput">xgen = [400, 1600, 6400];
-ygen = [0.96, 0.9925, 0.9975];
+</pre><h2 id="2">General Analysis -- Infinite path length, single iteration simulations</h2><p>With square axis-aligned boundaries the chance of random communication between non-coordinating agents appears to be stationary with-respect-to the number of agents. However, the transients behavior (rise-time) is shorter the more agents that are present. Also note that as the area of the boundaries increases the chance of communication goes down. A target for future work is to intelligently manipulate the distribution agents choose new random headings from, maybe from local interactions (comms). This should also be balanced with the transient (rise-time) behavior to meet mission needs (vehicle specs, on-scene time, power management, etc).</p><pre class="codeinput">xgen = [100, 400, 1600, 6400];
+ygen = [0.887, 0.96, 0.9925, 0.9975];
 
 figure()
 plot(xgen, ygen)
@@ -92,8 +92,15 @@ xlabel(<span class="string">"Boundary area"</span>)
 ylabel(<span class="string">"Probability of no communication"</span>)
 title(<span class="string">"Trend of no communication vs Boundary area"</span>)
 
-ylim([0.9 1.0])
-</pre><img vspace="5" hspace="5" src="square_analysis_01.png" alt=""> <h2 id="3">4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box</h2><p>Results: 4-Agent case: converges to [0.970, 0.974] 8-Agent case: converges to [0.969, 0.975] 16-Agent case: converges to [0.969, 0.976] 32-Agent case: converges to [0.969, 0.976]</p><pre class="codeinput">bounds = [0 20; 0 20];
+ylim([0.85 1.0])
+</pre><img vspace="5" hspace="5" src="square_analysis_01.png" alt=""> <h2 id="3">4, 8, 16, 32 Agent Inf Horizon Test in 10x10 Box</h2><pre class="codeinput"><span class="comment">% Results:</span>
+<span class="comment">% 4-Agent case: converges to [0.886, 0.888]</span>
+<span class="comment">% 8-Agent case: converges to [0.886, 0.889]</span>
+<span class="comment">% 16-Agent case: converges to [0.885, 0.890]</span>
+<span class="comment">% 32-Agent case: converges to [0.884, 0.891]</span>
+<span class="comment">%</span>
+
+bounds = [0 10 10 0; 0 0 10 10];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -101,7 +108,19 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);
 
 SimAnalysis.clearEmptyFigs();                            <span class="comment">% closes figures without titles (for empty ones!)</span>
-</pre><img vspace="5" hspace="5" src="square_analysis_02.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_03.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_04.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_05.png" alt=""> <h2 id="4">4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box</h2><p>Results: 4-Agent case: converges to [0.991, 0.994] 8-Agent case: converges to [0.990, 0.993] 16-Agent case: converges to [0.991, 0.994] 32-Agent case: converges to [0.990, 0.994]</p><pre class="codeinput">bounds = [0 40; 0 40];
+disp(<span class="string">"Done: 10x10 inf horizon"</span>)
+</pre><pre class="codeoutput">Done: 10x10 inf horizon
+</pre><img vspace="5" hspace="5" src="square_analysis_02.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_03.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_04.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_05.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_06.png" alt=""> <h2 id="4">4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box</h2><p>Results: 4-Agent case: converges to [0.970, 0.974] 8-Agent case: converges to [0.969, 0.975] 16-Agent case: converges to [0.969, 0.976] 32-Agent case: converges to [0.969, 0.976]</p><pre class="codeinput">bounds = [0 20 20 0; 0 0 20 20];
+
+a.steadyStateCommProb(bounds, 4, 100000, 1);             <span class="comment">% bounds, numAgents, N, sim_itrs</span>
+a.steadyStateCommProb(bounds, 8, 100000, 1);
+a.steadyStateCommProb(bounds, 16, 100000, 1);
+a.steadyStateCommProb(bounds, 32, 100000, 1);
+
+SimAnalysis.clearEmptyFigs();                            <span class="comment">% closes figures without titles (for empty ones!)</span>
+disp(<span class="string">"Done: 20x20 inf horizon"</span>)
+</pre><pre class="codeoutput">Done: 20x20 inf horizon
+</pre><img vspace="5" hspace="5" src="square_analysis_07.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_08.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_09.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_10.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_11.png" alt=""> <h2 id="5">4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box</h2><p>Results: 4-Agent case: converges to [0.991, 0.994] 8-Agent case: converges to [0.990, 0.993] 16-Agent case: converges to [0.991, 0.994] 32-Agent case: converges to [0.990, 0.994]</p><pre class="codeinput">bounds = [0 40 40 0; 0 0 40 40];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -109,7 +128,9 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);
 
 SimAnalysis.clearEmptyFigs();
-</pre><img vspace="5" hspace="5" src="square_analysis_06.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_07.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_08.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_09.png" alt=""> <h2 id="5">4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box</h2><p>Results: 4-Agent case: converges to [0.997, 0.998] 8-Agent case: converges to [0.997, 0.998] 16-Agent case: converges to [0.996, 0.998] 32-Agent case: converges to [0.996, 0.998]</p><pre class="codeinput">bounds = [0 80; 0 80];
+disp(<span class="string">"Done: 40x40 inf horizon"</span>)
+</pre><pre class="codeoutput">Done: 40x40 inf horizon
+</pre><img vspace="5" hspace="5" src="square_analysis_12.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_13.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_14.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_15.png" alt=""> <h2 id="6">4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box</h2><p>Results: 4-Agent case: converges to [0.997, 0.998] 8-Agent case: converges to [0.997, 0.998] 16-Agent case: converges to [0.996, 0.998] 32-Agent case: converges to [0.996, 0.998]</p><pre class="codeinput">bounds = [0 80 80 0; 0 0 80 80];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -117,8 +138,10 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);
 
 SimAnalysis.clearEmptyFigs();
-</pre><img vspace="5" hspace="5" src="square_analysis_10.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_11.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_12.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_13.png" alt=""> <h2 id="6">General Analysis -- 240 path length, multi-start simulations</h2><p>Analysis: For axis-align square boundaries the average number of steps with communication drops off sharply as the boudary area increases, but seems stationary (wrt the mean) to the number of agents. It should be noted that the std. deviation of the average number of steps in communication appears to increase as the number of agents increases. We can also note that the number of multi-start iterations with at least one agent pairing experiencing no communications increases sharply from the 20x20 bounds to 40x40 and beyond. We know that any iteration with two agents experiencing no communication results in an un-connected graph, which needs to be avoided. This is a target for future work.</p><pre class="codeinput">xgen = [400, 1600, 6400];
-ygen = [6.64, 1.935, 0.57];
+disp(<span class="string">"Done: 80x80 inf horizon"</span>)
+</pre><pre class="codeoutput">Done: 80x80 inf horizon
+</pre><img vspace="5" hspace="5" src="square_analysis_16.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_17.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_18.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_19.png" alt=""> <h2 id="7">General Analysis -- 240 path length, multi-start simulations</h2><p>Analysis: For axis-align square boundaries the average number of steps with communication drops off sharply as the boudary area increases, but seems stationary (wrt the mean) to the number of agents. It should be noted that the std. deviation of the average number of steps in communication appears to increase as the number of agents increases. We can also note that the number of multi-start iterations with at least one agent pairing experiencing no communications increases sharply from the 20x20 bounds to 40x40 and beyond. We know that any iteration with two agents experiencing no communication results in an un-connected graph, which needs to be avoided. This is a target for future work.</p><pre class="codeinput">xgen = [100, 400, 1600, 6400];
+ygen = [22.42, 6.64, 1.935, 0.57];
 
 figure()
 plot(xgen, ygen)
@@ -126,8 +149,8 @@ xlabel(<span class="string">"Boundary area"</span>)
 ylabel(<span class="string">"Average steps w/ communication"</span>)
 title(<span class="string">"Ave number of steps with communication vs Boundary area"</span>)
 
-ylim([0 7.0])
-</pre><img vspace="5" hspace="5" src="square_analysis_14.png" alt=""> <h2 id="7">4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box</h2><p>Results: 4-Agent case: ave comms [6.52, 6.75]; no comms itrs [318, 372] 8-Agent case: ave comms [6.51, 6.88]; no comms itrs [297, 388] 16-Agent case: ave comms [6.44, 6.85]; no comms itrs [299, 380] 32-Agent case: ave comms [6.41, 6.92]; no comms itrs [292, 397]</p><pre class="codeinput">bounds = [0 20; 0 20];
+ylim([0 25.0])
+</pre><img vspace="5" hspace="5" src="square_analysis_20.png" alt=""> <h2 id="8">4, 8, 16, 32 Agent Multi-Start Test in 10x10 Box</h2><p>Results: 4-Agent case: ave comms [22.36, 22.47]; no comms itrs [0, 1] (0.33 ave) 8-Agent case: ave comms [22.33, 22.61]; no comms itrs [0, 1] (1/28 ave) 16-Agent case: ave comms [22.10, 22.70]; no comms itrs [0, 1] (? ave) 32-Agent case: ave comms [22.27, 22.78]; no comms itrs [0, 1] (? ave)</p><pre class="codeinput">bounds = [0 10 10 0; 0 0 10 10];
 
 a.multiStartData(bounds, 4, 240, 5000);                 <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.multiStartData(bounds, 8, 240, 5000);
@@ -135,7 +158,9 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();
-</pre><img vspace="5" hspace="5" src="square_analysis_15.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_16.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_17.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_18.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_19.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_20.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_21.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_22.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_23.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_24.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_25.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_26.png" alt=""> <h2 id="8">4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box</h2><p>Results: 4-Agent case: ave comms [1.86, 2.01]; no comms itrs [2389, 2474] 8-Agent case: ave comms [1.82, 2.03]; no comms itrs [2342, 2491] 16-Agent case: ave comms [1.82, 2.09]; no comms itrs [2322, 2507] 32-Agent case: ave comms [1.76, 2.06]; no comms itrs [2334, 2515]</p><pre class="codeinput">bounds = [0 40; 0 40];
+disp(<span class="string">"Done: 10x10 multi-start"</span>)
+</pre><pre class="codeoutput">Done: 10x10 multi-start
+</pre><img vspace="5" hspace="5" src="square_analysis_21.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_22.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_23.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_24.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_25.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_26.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_27.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_28.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_29.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_30.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_31.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_32.png" alt=""> <h2 id="9">4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box</h2><p>Results: 4-Agent case: ave comms [6.52, 6.75]; no comms itrs [318, 372] 8-Agent case: ave comms [6.51, 6.88]; no comms itrs [297, 388] 16-Agent case: ave comms [6.44, 6.85]; no comms itrs [299, 380] 32-Agent case: ave comms [6.41, 6.92]; no comms itrs [292, 397]</p><pre class="codeinput">bounds = [0 20 20 0; 0 0 20 20];
 
 a.multiStartData(bounds, 4, 240, 5000);                 <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.multiStartData(bounds, 8, 240, 5000);
@@ -143,7 +168,9 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();
-</pre><img vspace="5" hspace="5" src="square_analysis_27.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_28.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_29.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_30.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_31.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_32.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_33.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_34.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_35.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_36.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_37.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_38.png" alt=""> <h2 id="9">4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box</h2><p>Results: 4-Agent case: ave comms [0.53, 0.61]; no comms itrs [4064, 4119] 8-Agent case: ave comms [0.49, 0.62]; no comms itrs [4031, 4140] 16-Agent case: ave comms [0.49, 0.69]; no comms itrs [4034, 4145] 32-Agent case: ave comms [0.49, 0.72]; no comms itrs [4026, 4166]</p><pre class="codeinput">bounds = [0 80; 0 80];
+disp(<span class="string">"Done: 20x20 multi-start"</span>)
+</pre><pre class="codeoutput">Done: 20x20 multi-start
+</pre><img vspace="5" hspace="5" src="square_analysis_33.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_34.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_35.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_36.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_37.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_38.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_39.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_40.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_41.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_42.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_43.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_44.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_45.png" alt=""> <h2 id="10">4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box</h2><p>Results: 4-Agent case: ave comms [1.86, 2.01]; no comms itrs [2389, 2474] 8-Agent case: ave comms [1.82, 2.03]; no comms itrs [2342, 2491] 16-Agent case: ave comms [1.82, 2.09]; no comms itrs [2322, 2507] 32-Agent case: ave comms [1.76, 2.06]; no comms itrs [2334, 2515]</p><pre class="codeinput">bounds = [0 40 40 0; 0 0 40 40];
 
 a.multiStartData(bounds, 4, 240, 5000);                 <span class="comment">% bounds, numAgents, N, sim_itrs</span>
 a.multiStartData(bounds, 8, 240, 5000);
@@ -151,15 +178,28 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();
+disp(<span class="string">"Done: 40x40 multi-start"</span>)
+</pre><pre class="codeoutput">Done: 40x40 multi-start
+</pre><img vspace="5" hspace="5" src="square_analysis_46.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_47.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_48.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_49.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_50.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_51.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_52.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_53.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_54.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_55.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_56.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_57.png" alt=""> <h2 id="11">4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box</h2><p>Results: 4-Agent case: ave comms [0.53, 0.61]; no comms itrs [4064, 4119] 8-Agent case: ave comms [0.49, 0.62]; no comms itrs [4031, 4140] 16-Agent case: ave comms [0.49, 0.69]; no comms itrs [4034, 4145] 32-Agent case: ave comms [0.49, 0.72]; no comms itrs [4026, 4166]</p><pre class="codeinput">bounds = [0 80 80 0; 0 0 80 80];
+
+a.multiStartData(bounds, 4, 240, 5000);                 <span class="comment">% bounds, numAgents, N, sim_itrs</span>
+a.multiStartData(bounds, 8, 240, 5000);
+a.multiStartData(bounds, 16, 240, 5000);
+a.multiStartData(bounds, 32, 240, 5000);
+
+SimAnalysis.clearEmptyFigs();
+disp(<span class="string">"Done: 80x80 multi-start"</span>)
 
 
 disp(<span class="string">'Done'</span>)
-</pre><pre class="codeoutput">Done
-</pre><img vspace="5" hspace="5" src="square_analysis_39.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_40.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_41.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_42.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_43.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_44.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_45.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_46.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_47.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_48.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_49.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_50.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+</pre><pre class="codeoutput">Done: 80x80 multi-start
+Done
+</pre><img vspace="5" hspace="5" src="square_analysis_58.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_59.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_60.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_61.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_62.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_63.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_64.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_65.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_66.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_67.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_68.png" alt=""> <img vspace="5" hspace="5" src="square_analysis_69.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Communication at Opportunity Sim REPLACE_WITH_DASH_DASH Square Boundary Analysis
 % By: Patrick Ledzian
 % Date: 10 April 2022
+% Last update: 24 April 2022
 
 % Overview:
 % Generate simulation data to provide insight as to how often agents
@@ -178,6 +218,7 @@ clc
 
 a = SimAnalysis();
 
+
 %% General Analysis REPLACE_WITH_DASH_DASH Infinite path length, single iteration simulations
 %
 % With square axis-aligned boundaries the chance of random communication
@@ -191,8 +232,8 @@ a = SimAnalysis();
 % meet mission needs (vehicle specs, on-scene time, power management, etc).
 %
 
-xgen = [400, 1600, 6400];
-ygen = [0.96, 0.9925, 0.9975];
+xgen = [100, 400, 1600, 6400];
+ygen = [0.887, 0.96, 0.9925, 0.9975];
 
 figure()
 plot(xgen, ygen)
@@ -200,7 +241,27 @@ xlabel("Boundary area")
 ylabel("Probability of no communication")
 title("Trend of no communication vs Boundary area")
 
-ylim([0.9 1.0])
+ylim([0.85 1.0])
+
+
+%% 4, 8, 16, 32 Agent Inf Horizon Test in 10x10 Box
+
+% Results:
+% 4-Agent case: converges to [0.886, 0.888]
+% 8-Agent case: converges to [0.886, 0.889]
+% 16-Agent case: converges to [0.885, 0.890]
+% 32-Agent case: converges to [0.884, 0.891]
+%
+
+bounds = [0 10 10 0; 0 0 10 10];
+
+a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
+a.steadyStateCommProb(bounds, 8, 100000, 1);
+a.steadyStateCommProb(bounds, 16, 100000, 1);
+a.steadyStateCommProb(bounds, 32, 100000, 1);            
+
+SimAnalysis.clearEmptyFigs();                            % closes figures without titles (for empty ones!)
+disp("Done: 10x10 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box
@@ -212,7 +273,7 @@ ylim([0.9 1.0])
 % 32-Agent case: converges to [0.969, 0.976]
 %
 
-bounds = [0 20; 0 20];
+bounds = [0 20 20 0; 0 0 20 20];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -220,6 +281,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs();                            % closes figures without titles (for empty ones!)
+disp("Done: 20x20 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box
@@ -231,7 +293,7 @@ SimAnalysis.clearEmptyFigs();                            % closes figures withou
 % 32-Agent case: converges to [0.990, 0.994]
 %
 
-bounds = [0 40; 0 40];
+bounds = [0 40 40 0; 0 0 40 40];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -239,6 +301,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs(); 
+disp("Done: 40x40 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box
@@ -250,7 +313,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: converges to [0.996, 0.998]
 %
 
-bounds = [0 80; 0 80];
+bounds = [0 80 80 0; 0 0 80 80];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -258,6 +321,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs();  
+disp("Done: 80x80 inf horizon")
 
 
 %% General Analysis REPLACE_WITH_DASH_DASH 240 path length, multi-start simulations
@@ -275,8 +339,8 @@ SimAnalysis.clearEmptyFigs();
 % avoided. This is a target for future work.
 %
 
-xgen = [400, 1600, 6400];
-ygen = [6.64, 1.935, 0.57];
+xgen = [100, 400, 1600, 6400];
+ygen = [22.42, 6.64, 1.935, 0.57];
 
 figure()
 plot(xgen, ygen)
@@ -284,7 +348,27 @@ xlabel("Boundary area")
 ylabel("Average steps w/ communication")
 title("Ave number of steps with communication vs Boundary area")
 
-ylim([0 7.0])
+ylim([0 25.0])
+
+
+%% 4, 8, 16, 32 Agent Multi-Start Test in 10x10 Box
+%
+% Results:
+% 4-Agent case: ave comms [22.36, 22.47]; no comms itrs [0, 1] (0.33 ave)
+% 8-Agent case: ave comms [22.33, 22.61]; no comms itrs [0, 1] (1/28 ave)
+% 16-Agent case: ave comms [22.10, 22.70]; no comms itrs [0, 1] (? ave)
+% 32-Agent case: ave comms [22.27, 22.78]; no comms itrs [0, 1] (? ave)
+%
+
+bounds = [0 10 10 0; 0 0 10 10];
+
+a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
+a.multiStartData(bounds, 8, 240, 5000);
+a.multiStartData(bounds, 16, 240, 5000);
+a.multiStartData(bounds, 32, 240, 5000);
+
+SimAnalysis.clearEmptyFigs();  
+disp("Done: 10x10 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box
@@ -296,7 +380,7 @@ ylim([0 7.0])
 % 32-Agent case: ave comms [6.41, 6.92]; no comms itrs [292, 397]
 %
 
-bounds = [0 20; 0 20];
+bounds = [0 20 20 0; 0 0 20 20];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -304,6 +388,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();                           
+disp("Done: 20x20 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box
@@ -315,7 +400,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: ave comms [1.76, 2.06]; no comms itrs [2334, 2515]
 %
  
-bounds = [0 40; 0 40];
+bounds = [0 40 40 0; 0 0 40 40];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -323,6 +408,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();   
+disp("Done: 40x40 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box
@@ -334,7 +420,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: ave comms [0.49, 0.72]; no comms itrs [4026, 4166]
 %
 
-bounds = [0 80; 0 80];
+bounds = [0 80 80 0; 0 0 80 80];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -342,6 +428,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();   
+disp("Done: 80x80 multi-start")
 
 
 disp('Done')

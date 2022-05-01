@@ -43,6 +43,8 @@ function side = findConvexSide(sides, curr_pos)
         disp(ang)
         disp(curr_ang)
         disp(curr_pos)
+        assignin("base","x", curr_pos)
+        assignin("base","ang", curr_ang)
         error("Side not assigned")
     end % if side not properly assigned
 

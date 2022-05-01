@@ -57,6 +57,7 @@ classdef MultiAgentSim < handle
         init_pos = squareInitPos(bounds, rounding);         % generates initial position for agent on perimeter of convex polygon
         side = findConvexSide(sides, curr_ang);             % finds intersection side for convex polygon
         init_pos = convexPolyInitPos(bounds, rounding);
+        bounds = genRegularPolygonBounds(radius, num_vertices);
 
     end % Static methods
 end % classdef

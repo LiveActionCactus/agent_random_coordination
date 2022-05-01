@@ -19,6 +19,7 @@ function itr_comm_plot = plotSimItrAveDistComms(obj)
     
     n = linspace(1, obj.sim_itrs, obj.sim_itrs);                % domain of single simulation
     ave_window = 2000;                                          % moving average window size
+    %ave_window = 1;
     
     % generate analysis data for plotting
     for i = 1:obj.sim_itrs

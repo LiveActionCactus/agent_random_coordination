@@ -20,6 +20,7 @@ clc
 
 a = SimAnalysis();
 
+
 %% General Analysis -- Infinite path length, single iteration simulations
 %
 % With square axis-aligned boundaries the chance of random communication
@@ -33,8 +34,8 @@ a = SimAnalysis();
 % meet mission needs (vehicle specs, on-scene time, power management, etc).
 %
 
-xgen = [400, 1600, 6400];
-ygen = [0.96, 0.9925, 0.9975];
+xgen = [100, 400, 1600, 6400];
+ygen = [0.887, 0.96, 0.9925, 0.9975];
 
 figure()
 plot(xgen, ygen)
@@ -42,7 +43,27 @@ xlabel("Boundary area")
 ylabel("Probability of no communication")
 title("Trend of no communication vs Boundary area")
 
-ylim([0.9 1.0])
+ylim([0.85 1.0])
+
+
+%% 4, 8, 16, 32 Agent Inf Horizon Test in 10x10 Box
+
+% Results:
+% 4-Agent case: converges to [0.886, 0.888]
+% 8-Agent case: converges to [0.886, 0.889]
+% 16-Agent case: converges to [0.885, 0.890]
+% 32-Agent case: converges to [0.884, 0.891]
+%
+
+bounds = [0 10 10 0; 0 0 10 10];
+
+a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
+a.steadyStateCommProb(bounds, 8, 100000, 1);
+a.steadyStateCommProb(bounds, 16, 100000, 1);
+a.steadyStateCommProb(bounds, 32, 100000, 1);            
+
+SimAnalysis.clearEmptyFigs();                            % closes figures without titles (for empty ones!)
+disp("Done: 10x10 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 20x20 Box
@@ -54,7 +75,7 @@ ylim([0.9 1.0])
 % 32-Agent case: converges to [0.969, 0.976]
 %
 
-bounds = [0 20; 0 20];
+bounds = [0 20 20 0; 0 0 20 20];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -62,6 +83,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs();                            % closes figures without titles (for empty ones!)
+disp("Done: 20x20 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 40x40 Box
@@ -73,7 +95,7 @@ SimAnalysis.clearEmptyFigs();                            % closes figures withou
 % 32-Agent case: converges to [0.990, 0.994]
 %
 
-bounds = [0 40; 0 40];
+bounds = [0 40 40 0; 0 0 40 40];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -81,6 +103,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs(); 
+disp("Done: 40x40 inf horizon")
 
 
 %% 4, 8, 16, 32 Agent Inf Horizon Test in 80x80 Box
@@ -92,7 +115,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: converges to [0.996, 0.998]
 %
 
-bounds = [0 80; 0 80];
+bounds = [0 80 80 0; 0 0 80 80];
 
 a.steadyStateCommProb(bounds, 4, 100000, 1);             % bounds, numAgents, N, sim_itrs
 a.steadyStateCommProb(bounds, 8, 100000, 1);
@@ -100,6 +123,7 @@ a.steadyStateCommProb(bounds, 16, 100000, 1);
 a.steadyStateCommProb(bounds, 32, 100000, 1);            
 
 SimAnalysis.clearEmptyFigs();  
+disp("Done: 80x80 inf horizon")
 
 
 %% General Analysis -- 240 path length, multi-start simulations
@@ -117,8 +141,8 @@ SimAnalysis.clearEmptyFigs();
 % avoided. This is a target for future work.
 %
 
-xgen = [400, 1600, 6400];
-ygen = [6.64, 1.935, 0.57];
+xgen = [100, 400, 1600, 6400];
+ygen = [22.42, 6.64, 1.935, 0.57];
 
 figure()
 plot(xgen, ygen)
@@ -126,7 +150,27 @@ xlabel("Boundary area")
 ylabel("Average steps w/ communication")
 title("Ave number of steps with communication vs Boundary area")
 
-ylim([0 7.0])
+ylim([0 25.0])
+
+
+%% 4, 8, 16, 32 Agent Multi-Start Test in 10x10 Box
+%
+% Results:
+% 4-Agent case: ave comms [22.36, 22.47]; no comms itrs [0, 1] (0.33 ave)
+% 8-Agent case: ave comms [22.33, 22.61]; no comms itrs [0, 1] (1/28 ave)
+% 16-Agent case: ave comms [22.10, 22.70]; no comms itrs [0, 1] (? ave)
+% 32-Agent case: ave comms [22.27, 22.78]; no comms itrs [0, 1] (? ave)
+%
+
+bounds = [0 10 10 0; 0 0 10 10];
+
+a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
+a.multiStartData(bounds, 8, 240, 5000);
+a.multiStartData(bounds, 16, 240, 5000);
+a.multiStartData(bounds, 32, 240, 5000);
+
+SimAnalysis.clearEmptyFigs();  
+disp("Done: 10x10 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 20x20 Box
@@ -138,7 +182,7 @@ ylim([0 7.0])
 % 32-Agent case: ave comms [6.41, 6.92]; no comms itrs [292, 397]
 %
 
-bounds = [0 20; 0 20];
+bounds = [0 20 20 0; 0 0 20 20];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -146,6 +190,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();                           
+disp("Done: 20x20 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 40x40 Box
@@ -157,7 +202,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: ave comms [1.76, 2.06]; no comms itrs [2334, 2515]
 %
  
-bounds = [0 40; 0 40];
+bounds = [0 40 40 0; 0 0 40 40];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -165,6 +210,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();   
+disp("Done: 40x40 multi-start")
 
 
 %% 4, 8, 16, 32 Agent Multi-Start Test in 80x80 Box
@@ -176,7 +222,7 @@ SimAnalysis.clearEmptyFigs();
 % 32-Agent case: ave comms [0.49, 0.72]; no comms itrs [4026, 4166]
 %
 
-bounds = [0 80; 0 80];
+bounds = [0 80 80 0; 0 0 80 80];
 
 a.multiStartData(bounds, 4, 240, 5000);                 % bounds, numAgents, N, sim_itrs
 a.multiStartData(bounds, 8, 240, 5000);
@@ -184,6 +230,7 @@ a.multiStartData(bounds, 16, 240, 5000);
 a.multiStartData(bounds, 32, 240, 5000);
 
 SimAnalysis.clearEmptyFigs();   
+disp("Done: 80x80 multi-start")
 
 
 disp('Done')

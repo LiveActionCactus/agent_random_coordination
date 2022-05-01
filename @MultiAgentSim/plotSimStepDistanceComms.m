@@ -39,6 +39,6 @@ function ssd_plot = plotSimStepDistanceComms(obj)
     xlabel("n-th step")
     ylabel("Moving ave probability of no comms")
 
-    ylim([0.95 1.0])
+    ylim([0.85 1.0])
 
 end % end plotSimStepDistanceComms

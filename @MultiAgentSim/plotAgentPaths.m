@@ -13,7 +13,8 @@ function agent_path_plot = plotAgentPaths(obj, sim_itr)
         plot( obj.agents{(sim_itr+1),i}(2,end), obj.agents{(sim_itr+1),i}(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
     end
 
-    axis([0, obj.boundary(1,2), 0, obj.boundary(2,2)])
+    axis equal
+    axis([0, max(obj.boundary(1,:)), 0, max(obj.boundary(2,:))])
     title("Paths of " + obj.numAgents + " agents")
 
 end % end plotAgentPaths

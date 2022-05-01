@@ -57,7 +57,8 @@ classdef SimAnalysis < handle
 
         function multiStartData(obj, bounds, numAgents, N, sim_itrs)
             % produces data: itr_comm_plot
-            sim = MultiAgentSim(bounds, numAgents, N, sim_itrs); 
+            sim = MultiAgentSim(bounds, numAgents, N, sim_itrs);
+            assignin("base", "sim", sim);
             [ssd_plot, ssd_conn_data, itr_comm_plot, agent_path_plot] = sim.runSim(1,0,1,0);        % plot paths; plot agent single itr; plot agent multi-start; plot comms
 
             if ~isequal(agent_path_plot, 0)

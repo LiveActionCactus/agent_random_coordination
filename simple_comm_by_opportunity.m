@@ -46,11 +46,13 @@ clear all
 clc
 
 % TODO: FIX Agent/findEndpoint to run full vertices case / convex polys
-%bounds = [0 20 20 0; 0 0 20 20];               
-bounds = [0 20; 0 20];
+bounds = [0 50 50 0; 0 0 20 20];          
+%bounds = MultiAgentSim.genRegularPolygonBounds(5, 5);
+%bounds = MultiAgentSim.genRegularPolygonBounds(5, 4);
+%bounds = [0 20; 0 20];
 %testSim = MultiAgentSim(bounds, 4, 1,1);
-%testSim = MultiAgentSim(bounds, 4, 240,1000);     % boundary vertices; n agents; steps in sim; num sims
-testSim = MultiAgentSim(bounds, 4, 1000,1);
+testSim = MultiAgentSim(bounds, 4, 240,5000);     % boundary vertices; n agents; steps in sim; num sims
+%testSim = MultiAgentSim(bounds, 4, 6000,1);
 
 % runSim() parameters -- (1/0; yes/no);
 % 1) plot graphs; triangle is init pos / square is end pos
@@ -58,8 +60,8 @@ testSim = MultiAgentSim(bounds, 4, 1000,1);
 % 3) generate distance matrix for each iteration of the multi-start and average all
 % 4) plot communication cumulative ave for single simulation case
 
-%testSim.runSim(1,0,1,0);
-testSim.runSim(1,1,0,1);                  % 2&4 run together, can't run with 3
+testSim.runSim(1,0,1,0);
+%testSim.runSim(1,1,0,1);                  % 2&4 run together, can't run with 3
 
 disp('Done')
 

@@ -12,7 +12,9 @@ function runAgent(obj, sim_itr)
     x_new = obj.x + ([cos(obj.head_ang); sin(obj.head_ang)] .* x_n);
     x_new = round(x_new, 2);                % enforce precision requirements for numerical issues
     
-    if bounds(1,1) <= x_new(1,1) && x_new(1,1) <= bounds(1,2) && bounds(2,1) <= x_new(2,1) && x_new(2,1) <= bounds(2,2)
+    % TODO: generalize for convex shapes
+    [in_poly, on_poly] = inpolygon(x_new(1,1), x_new(2,1), bounds(1,:), bounds(2,:));
+    if in_poly
         obj.x = x_new;
     else
         obj.x = obj.x_e;                        % causing a problem sometimes, leaving obj.x empty

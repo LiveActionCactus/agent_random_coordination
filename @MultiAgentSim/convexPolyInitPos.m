@@ -7,6 +7,7 @@ function init_pos = convexPolyInitPos(bounds, rounding)
     % https://stackoverflow.com/questions/42023522/random-sampling-of-points-along-a-polygon-boundary
 
     % TODO: check if convex polygon, rejeect if not
+    % TODO; I THINK THIS IS RUNNING VERY SLOWLY
 
     num_vert = length(bounds);
     side_len = zeros(length(num_vert));
@@ -35,21 +36,42 @@ function init_pos = convexPolyInitPos(bounds, rounding)
     % generate parametric equation for a line between base vertex and next
     target = [];
     base = [];
-    if perim_map_idxs(1,end) < length(bounds) 
-        vec = bounds(:, (perim_map_idxs(1,end)+1)) - bounds(:, perim_map_idxs(1,end));
-        target = bounds(:, (perim_map_idxs(1,end)+1));
-        base = bounds(:, perim_map_idxs(1,end));
-    elseif isequal(perim_map_idxs(1,end), length(bounds))
-        vec = bounds(:, 1) - bounds(:, (perim_map_idxs(1,end)));
-        target = bounds(:, 1);
+    if (perim_map_idxs(1,end) < length(bounds))
+        target = bounds(:, perim_map_idxs(1,end)+1);
         base = bounds(:, (perim_map_idxs(1,end)));
-    else
+        vec = target-base;
+        vec_norm = vec ./ norm(vec);                % normalize vector between vertices
+    elseif isequal(perim_map_idxs(1,end), length(bounds))
+        target = bounds(:,1);
+        base = bounds(:,perim_map_idxs(1,end));
+        vec = target-base;
+        vec_norm = vec ./ norm(vec);                % normalize vector between vertices
+    elseif isequal(perim_map_idxs(1,end), (length(bounds)+1))
+        target = bounds(:, 2);
+        base = bounds(:, 1);
+        vec = target - base;
+        vec_norm = vec ./ norm(vec);                % normalize vector between vertices
+%     elseif isequal(base_vert, init_mapped) && isequal(offset_dist, 0)        % captures edge case; last vertex w/ agent initialized there                                                               
+%         vec = [0;0];
+%         target = bounds(:,1);
+%         base = bounds(:,1);
+%         vec_norm = [0;0];
+    else    
+        disp(offset_dist)
+        disp(base_vert)
+        disp(init_mapped)
+        disp(perim_map)
+        disp(perim_bool)
+        disp(perim_map_idxs)    
+        disp(length(bounds))
+        disp(bounds)
         error("Issue with convexPolyInitPos generation")
     end
 
-    vec_norm = vec ./ norm(vec);                % normalize vector between vertices
-
     % test for direction of movement along perimeter
+%     disp(base)
+%     disp(vec_norm)
+%     disp(offset_dist)
     init_pos1 = base + offset_dist.*vec_norm;    % +- between terms determines direction
     init_pos2 = base - offset_dist.*vec_norm;    % +- between terms determines direction
     dist1 = sqrt( (target(1,1) - init_pos1(1,1))^2 + (target(2,1) - init_pos1(2,1))^2);
@@ -60,11 +82,11 @@ function init_pos = convexPolyInitPos(bounds, rounding)
     elseif (dist1 > dist2)
         init_pos = init_pos2;
     else
-        disp('Vertex init pos')
         init_pos = base;
     end
 
     init_pos = round(init_pos, 2);
 
-    %init_pos = [init_pos, bounds(:, perim_map_idxs(1,end)), [base_vert; offset_dist]];
+%     if(init_pos(1,1) < 0)
+%         pause
 end
