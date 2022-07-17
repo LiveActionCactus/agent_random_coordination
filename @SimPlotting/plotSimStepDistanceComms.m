@@ -1,6 +1,13 @@
 function plotSimStepDistanceComms(obj)
 %PLOTSIMSTEPDISTANCECOMMS plot the time-varying behavior of the
 %communications in a single sim
+%
+% --Inputs--
+% (None) : simulation object
+%
+% --Outputs--
+% (None) : creates a single figure for a single sim
+%
 
     uppertri_ele = ( obj.numAgents * (obj.numAgents-1) ) / 2;   % analytic expression for number of upprer triangular elements
     ca_comm = zeros(obj.N, uppertri_ele);                       % flattened upper triangular elements

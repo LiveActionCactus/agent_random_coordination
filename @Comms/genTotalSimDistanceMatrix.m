@@ -1,6 +1,14 @@
 function genTotalSimDistanceMatrix(obj, sim_itr)
 %GENTOTALSIMDISTANCEMATRIX for a finished simulation iteration, generate an adjacency 
-%matrix indicating which agents communicated
+%matrix indicating which agents communicated. SHOULD NOT BE RUN AT THE SAME
+%TIME AS genSimStepDistanceMatrix()
+%
+% --Inputs--
+% sim_itr : integer indicating sim multi-start number
+%
+% --Outputs--
+% (None) : updates simulation obj "sim_conn_data" property
+%
 
 % TODO: generalize comm_dist for heterogeneous agent case
 

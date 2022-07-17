@@ -1,6 +1,14 @@
 function genSimStepDistanceMatrix(obj, sim_step)
 %GENSIMSTEPDISTANCEMATRIX generate a distance matrix for each step of a
-%single simulation iteration, keep a running average.
+%single simulation iteration, keep a running average. SHOULD NOT BE RUN AT
+%THE SAME TIME AS genTotalSimDistanceMatrix()
+%
+% --Inputs--
+% sim_step : 
+%
+% --Outputs--
+% (None) : updates sim obj property "sim_conn_data"
+%
 
     x_pos = zeros(1, obj.numAgents);    % numAgents x sim_size matrix
     y_pos = zeros(1, obj.numAgents);

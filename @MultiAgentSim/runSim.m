@@ -1,9 +1,18 @@
-function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim_step_distance)
-%RUNSIM run one time-step of the simulation
+function runSim(obj)
+%RUNSIM increment simulation by one, update agent dynamics and stored-state
+%information when applicable.
+%
+% --Inputs--
+% obj : sim env object
+%
+% --Outputs--
+% (None) : updates agents referenced in sim object
+%
 
-    plot_freq = 1000;           % modulus base for print/plot frequency
+    multi_start_freq = floor(obj.sim_itrs / 10); % decimate multi-start indices
+    per = 0;    % percent complete
 
-    % run iteration in the multi-start monte-carlo simulations
+    % run multi-start simulation loop
     for i = 1:obj.sim_itrs
         
         % run steps in a single simulation
@@ -11,39 +20,20 @@ function runSim(obj, plot_paths, gen_sim_step_dist, gen_total_sim_dist, plot_sim
             obj.n = n;
             
             for k = 1:obj.numAgents
-                obj.agents{1,k}.runAgent(i)
-            end
-    
-            % Generate distance matrix for each step of the sim
-            if gen_sim_step_dist
-                obj.genSimStepDistanceMatrix(n);
+                obj.agents{1,k}.runAgent(n)
             end
        
         end % end for step in sim size
 
-        if plot_sim_step_distance && gen_sim_step_dist
-            obj.plotSimStepDistanceComms();
+        % Print simple multi-start sim status
+        if mod(i, multi_start_freq) == 0
+            per = per + 10;
+            fprintf("Sim %i%% Complete \n", per)
         end
-
-        % Generate distance matrix for each iteration of the multi-start
-        % case of the simulation
-        if gen_total_sim_dist
-            obj.genTotalSimDistanceMatrix(i)
-            obj.sim_conn_data{2,1} = sum(cat(3,obj.sim_conn_data{:}),3) ./ obj.sim_itrs;
-        end
-
-        % Plot agent paths every i-th iteration of the multi-start case for
-        % the simulation
-        if mod(i,plot_freq) == 0
-            fprintf("Sim %i Complete \n", i)
-
-            if plot_paths
-                obj.plotAgentPaths(i);     % plot every n-th sim
-            end
         
-        end % end if every mod-th sim run
-
-        obj.resetAgents();          % reset Agent properties for simulation restartS
+        obj.storeAgentData(i);
+        obj.initializeAgents();
+        %obj.resetAgents();                          % reset Agent properties for simulation restarts
     
     end % end "sim_itrs"-times multi-start simulations
 
