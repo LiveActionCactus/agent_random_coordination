@@ -17,15 +17,15 @@ function plotAgentPaths(obj, num_plots, labels)
     % Square is end of path
     for k = 1:num_plots
         j = plot_itrs(1,k);
-        data = obj.sim_env.sim_itrs_data;          % stored agents' state info (1 x sim_itr) cell array
+        data = obj.sim_env.sim_itrs_data.state;          % stored agents' state info (num_agents x sim_itr) cell array
 
         figure()
         hold on
 
         for i = 1:obj.sim_env.numAgents
-            h = plot( data{i,j}.state(2,:), data{i,j}.state(3,:), '-*', 'MarkerSize', 3 );
-            plot( data{i,j}.state(2,1), data{i,j}.state(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color )
-            plot( data{i,j}.state(2,end), data{i,j}.state(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
+            h = plot( data{i,j}(2,:), data{i,j}(3,:), '-*', 'MarkerSize', 3 );
+            plot( data{i,j}(2,1), data{i,j}(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color )
+            plot( data{i,j}(2,end), data{i,j}(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
         end
 
         if isequal(labels, 1)

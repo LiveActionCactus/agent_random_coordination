@@ -13,7 +13,8 @@ function runAgent(obj, sim_itr)
 % https://stackoverflow.com/questions/18295825/determine-if-point-is-within-bounding-box
     
     x = obj.state; %[obj.head_ang; obj.x];
-    obj.state_log(1:3, sim_itr) = x;  % store previous state info
+    obj.state_log(1:3, sim_itr) = x;                % store previous state info 
+    obj.est_state_log(:,sim_itr) = obj.est_state;   % store previous est state info
 
     bounds = obj.sim_env.boundary;
     x_n = [1;1];

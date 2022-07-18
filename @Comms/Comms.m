@@ -28,6 +28,7 @@ classdef Comms < handle
 
         initializeComms(obj);
         undirectedCommsUpdate(obj, itr);
+        calcUndirectedUnionGraph(obj, itr, reset_union);
         calcRenStochConv(obj, itr);
     
     end

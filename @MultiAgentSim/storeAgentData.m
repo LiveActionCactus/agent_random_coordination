@@ -11,8 +11,9 @@ function storeAgentData(obj, i)
 
     %TODO: make a struct to store in the cell array
     for k = 1:obj.numAgents
-        obj.sim_itrs_data{k,i} = struct("state", obj.agents{1,k}.state_log);        % store Agents info for prev sim run
+        obj.sim_itrs_data.state{k,i} = obj.agents{1,k}.state_log;        % store Agents info for prev sim run
+        obj.sim_itrs_data.est_state{k,i} = obj.agents{1,k}.est_state_log;
     end
 
-    obj.sim_itrs_data{obj.numAgents+1,i} = obj.comms.comms_data;                % TODO: find better place / way for this
+    obj.sim_itrs_data.comms{1,i} = obj.comms.comms_data;                
 end

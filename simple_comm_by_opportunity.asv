@@ -11,9 +11,13 @@ close all
 clear all
 clc
 
-testSim = MultiAgentSim(4, 20, 10);     % n agents; steps in sim; num sims
+% TODO: build "flags" struct that can be passed as arg to MultiAgentSim to
+% specify actions to take
+
+testSim = MultiAgentSim(4, 500, 10);     % n agents; steps in sim; num sims
 testSim.runSim();
-testSim.plotting.plotAgentPaths(5, 1);  % num_plots; labels
+testSim.plotting.plotAgentPaths(1, 1);     % num_plots; labels
+testSim.plotting.plotRenStochMat();
 
 disp('Done')
 

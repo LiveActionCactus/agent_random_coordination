@@ -21,7 +21,9 @@ classdef Agent < handle
             'side_o', NaN ... % starting side; for single trajectory segment
             );  
         state = NaN;         % array storing current agent state [heading; x; y]
+        est_state = NaN;     % array storing estmated information
         state_log = NaN;     % array logging all previous state information
+        est_state_log = NaN; % array logging all previous est state info
 
     end % properties
 
@@ -44,13 +46,15 @@ classdef Agent < handle
             obj.state = zeros(3, 1);
             obj.state_log = zeros(3, obj.sim_env.sim_itrs);
 
+            obj.setInitialEst();
             obj.setInitialPos();
             obj.genHeadingAngle(0.1);
             obj.findEndpoint();
         
         end % end Agent constructor
 
-        setInitialPos(obj)                    % initializes agent on boundary, sets x_o and x
+        setInitialEst(obj);                   % initializes information to be estimated
+        setInitialPos(obj);                   % initializes agent on boundary, sets x_o and x
         genHeadingAngle(obj, rounding);       % generates new random heading angle for agent, sets head_ang property of Agent object
         findEndpoint(obj);                    % uses agent position and random heading to find endpoint of linear trajectory, sets x_e
         runAgent(obj, sim_itr);               % updates agent dynamics / behaviors based on simulation iteration
