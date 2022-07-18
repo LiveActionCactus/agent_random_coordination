@@ -1,6 +1,14 @@
 function side = findConvexSide(sides, curr_pos)
 %FINDCONVEXSIDE determine which side of convex polygon agent is on, shapes
 %live in domain of [0, pi].
+%
+% --Inputs--
+% sides : number of agents to initialize in sim env 
+% curr_pos : current position of Agent
+%
+% --Outputs--
+% side : which side of polygon the agent is currently located
+%
 
 % [DONE] need to deal with numerical issue not allowing "side = 0" to return
 % [DONE] need to capture side 3

@@ -9,7 +9,7 @@ function runSim(obj)
 % (None) : updates agents referenced in sim object
 %
 
-    multi_start_freq = floor(obj.sim_itrs / 10); % decimate multi-start indices
+    multi_start_freq = floor(obj.sim_itrs / 10); % decimate multi-start indices % TODO: fix this, it doesn't work if sim_itrs ~= 10
     per = 0;    % percent complete
 
     % run multi-start simulation loop
@@ -23,6 +23,7 @@ function runSim(obj)
                 obj.agents{1,k}.runAgent(n)
             end
        
+            obj.comms.undirectedCommsUpdate(n);
         end % end for step in sim size
 
         % Print simple multi-start sim status
@@ -33,7 +34,6 @@ function runSim(obj)
         
         obj.storeAgentData(i);
         obj.initializeAgents();
-        %obj.resetAgents();                          % reset Agent properties for simulation restarts
     
     end % end "sim_itrs"-times multi-start simulations
 

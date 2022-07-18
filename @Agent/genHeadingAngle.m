@@ -1,23 +1,25 @@
 function genHeadingAngle(obj, rounding)
 %GENHEADINGANGLE generate new random heading angle upon intersection with a
 %boundary
+%
+% --Inputs--
+% obj : Agent object
+% rounding : precision of output heading angle
+%
+% --Outputs--
+% (None) : generates new rand head_ang and boundary side of intersection
+%
 
 % TODO: need to generalize how "sides" is determined
 
     bounds = obj.sim_env.boundary;
-    curr_pos = obj.x;
+    curr_pos = obj.state(2:3, 1);
     
     sides = 2*length(bounds);           % number of sides in convex polygon    
     rot_ang = (pi)/(sides);             % amount to rotate by per side
     interior_ang = 180 - (2*rot_ang);   % total interior angle at each vertex
 
-    test1 = size(curr_pos);
-    test2 = size([1; 0]);
-    if ~isequal(test1, test2)
-        disp(test1)
-        disp(test2)
-        disp(isempty(curr_pos))
-        disp(curr_pos)
+    if ~isequal(size(curr_pos), size([1; 0]))
         disp('Curr pos not same size as [1 0]')
     end
 
@@ -35,7 +37,7 @@ function genHeadingAngle(obj, rounding)
         head_ang = floor(head_ang) + floor( (head_ang-floor(head_ang))/rounding) * rounding; % rounds all values to "rounding" variable, if greater than 0
     end
 
-    obj.side_o = side;
-    obj.head_ang = head_ang;
+    obj.traj.side_o = side;
+    obj.state(1,1) = head_ang;
 
 end % end genHeadingAngle

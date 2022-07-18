@@ -1,10 +1,11 @@
-function plotAgentPaths(obj, num_plots)
+function plotAgentPaths(obj, num_plots, labels)
 %PLOTAGENTPATHS plots specified number of figures, each representing a
 %different run of the simulation and the paths the agents followed.
 %
 % --Inputs--
 % obj :         SimPlotting object which has a pointer to SimEnv object
 % num_plots :   number/samples of agent path plots to generate
+% labels : 1 -- label figures; 0 -- or don't
 %
 % --Outputs--
 % figure(s) : produces a new figure for each sample of stored agent paths
@@ -25,6 +26,10 @@ function plotAgentPaths(obj, num_plots)
             h = plot( data{i,j}.state(2,:), data{i,j}.state(3,:), '-*', 'MarkerSize', 3 );
             plot( data{i,j}.state(2,1), data{i,j}.state(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color )
             plot( data{i,j}.state(2,end), data{i,j}.state(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
+        end
+
+        if isequal(labels, 1)
+            title("Agent trajectories -- Sim itr: " + plot_itrs(1,k) + " Sim steps: " + obj.sim_env.N)
         end
     end
 

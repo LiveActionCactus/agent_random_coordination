@@ -15,11 +15,22 @@ classdef SimPlotting < handle
 
     methods
         function obj = SimPlotting(sim_env)
+            % SIMPLOTTING constructor for plotting object, specifies 
+            % simulation env to access data from
+            %
+            % --Inputs--
+            % sim_env : points to simulation environment object
+            %
+            % --Outputs--
+            % obj : plotting object
+            %
+
             obj.sim_env = sim_env;              % simulation environment with all data for plotting
 
         end % end SimPlotting constructor
 
-        plotAgentPaths(obj, num_plots);       % plot agent paths in sim env
+        plotAgentPaths(obj, num_plots, labels);       % plot agent paths in sim env
+        plotRenStochMat(obj);
     end
 
 end % SIMPLOTTING

@@ -9,16 +9,20 @@ classdef Agent < handle
 
     properties
         sim_env = NaN;       % handle to simulation environment object all agents live in       
-        id = NaN;            % integer id of each agent (1, inf)
-        T = 1.0;             % discretization time step size (t -> nT)
-        x_o = [];            % initial position (on boundary of surveillance region)
-        side_o = NaN;        % starting side; for single trajectory segment
-        x = [];              % current position
-        x_e = [NaN; NaN];    % end point for trajectory
-        head_ang = NaN;      % current heading angle [0 2*pi)
-        comm_dist = 2;       % communication radius
-        state = NaN;             % TODO: use this instead of obj.agents; stores history of agent states; agents will also store local map and local comms perspective
-        
+        id = NaN;            % integer id of each agent (1, inf)        
+        comms = struct( ...
+            'dist', 2.0, ...    % communication radius
+            'in_comm', NaN ...  % container.Map; 1 -- in comms, 0 -- not
+            )
+        traj = struct( ...    % struct storing information req'd for trajectory
+            'T', NaN, ...     % discretization time step size (t -> nT)
+            'x_o', [], ...    % initial position (on boundary of surveillance region)
+            'x_e', [], ...    % end point for trajectory
+            'side_o', NaN ... % starting side; for single trajectory segment
+            );  
+        state = NaN;         % array storing current agent state [heading; x; y]
+        state_log = NaN;     % array logging all previous state information
+
     end % properties
 
     methods
@@ -36,13 +40,14 @@ classdef Agent < handle
 
             obj.sim_env = sim_env;
             obj.id = id;
-            obj.state = zeros(3, obj.sim_env.sim_itrs);
+            obj.traj.T = 1.0;               % default time-step
+            obj.state = zeros(3, 1);
+            obj.state_log = zeros(3, obj.sim_env.sim_itrs);
 
             obj.setInitialPos();
             obj.genHeadingAngle(0.1);
             obj.findEndpoint();
         
-            
         end % end Agent constructor
 
         setInitialPos(obj)                    % initializes agent on boundary, sets x_o and x
