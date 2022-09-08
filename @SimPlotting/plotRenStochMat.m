@@ -2,7 +2,7 @@ function plotRenStochMat(obj)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
     
-    plot_trees = 6;
+    plot_trees = 10;
     rs_trees_int = {};
     rs_trees = [];
     
@@ -44,6 +44,10 @@ function plotRenStochMat(obj)
             histogram(rs_trees(:,i), 60, 'FaceColor','blue','EdgeColor','blue');
         end
     end
+
+    title("Sim steps until spanning tree for " + plot_trees + " trees (Sim itrs = " + obj.sim_env.sim_itrs + " N = " + obj.sim_env.N + ")")
+    xlabel("Sim steps")
+    ylabel("Occurances")
 
     % Plot convergence of average consesus law acting on estimated states
     est_state_log = obj.sim_env.sim_itrs_data.est_state;

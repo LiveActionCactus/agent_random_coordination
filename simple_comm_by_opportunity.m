@@ -7,11 +7,14 @@
 
 %% TODO
 % -1) double check paper to make sure Ren is implemented correctly
+% (spanning tree calculation)
 % 0) fit spanning tree distributions to math
-% 1) build "flags" struct that can be passed as arg to MultiAgentSim to
+% 1) pretty up the state average consensus dynamics plots
+% 2) write-up results!
+% 3) build "flags" struct that can be passed as arg to MultiAgentSim to
 % specify actions to take
-% 2) implement 2-D map that each agent holds
-% 3) implement value iteration / DP over the map
+% 4) implement 2-D map that each agent holds
+% 5) implement value iteration / DP over the map
 
 %% Run the simulation
 

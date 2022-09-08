@@ -2,7 +2,7 @@ function plotRenStochMat(obj)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
     
-    plot_trees = 6;
+    plot_trees = 10;
     rs_trees_int = {};
     rs_trees = [];
     
@@ -26,7 +26,7 @@ function plotRenStochMat(obj)
     hold on
 
     for i = 1:plot_trees
-        subplot(2,3,i)
+        subplot(2,5,i)
         hist(rs_trees(:,i), 60)
         xlabel("Sim steps")
         ylabel("Occurances")
@@ -37,15 +37,15 @@ function plotRenStochMat(obj)
     figure()
     hold on
     
-    map = brewermap(3, 'Set1');
-   
     for i = 1:plot_trees
         if isequal(mod(i,2), 0)
-            hist(rs_trees(:,i), 60, 'FaceColor','red','EdgeColor','red');
+            histogram(rs_trees(:,i), 60, 'FaceColor','red','EdgeColor','red', 'FaceAlpha', 0.7);
         else
-            h = hist(rs_trees(:,i), 60, 'FaceColor','blue','EdgeColor','blue');
+            histogram(rs_trees(:,i), 60, 'FaceColor','blue','EdgeColor','blue');
         end
     end
+
+    title("Sim steps until spanning tr")
 
     % Plot convergence of average consesus law acting on estimated states
     est_state_log = obj.sim_env.sim_itrs_data.est_state;
