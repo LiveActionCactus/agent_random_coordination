@@ -2,7 +2,7 @@ function plotRenStochMat(obj)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
     
-    plot_trees = 10;
+    plot_trees = 1; %10;
     rs_trees_int = {};
     rs_trees = [];
     
