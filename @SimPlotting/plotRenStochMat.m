@@ -54,11 +54,12 @@ function plotRenStochMat(obj)
     est_state = cat(1, est_state_log{:,1});                     % for 1st sim iteration
     x = linspace(0, length(est_state)-1, length(est_state));
 
+    col = lines(obj.sim_env.numAgents);
     figure()
     hold on
     
     for i = 1:obj.sim_env.numAgents
-        plot(x, est_state(i,:))
+        plot(x, est_state(i,:), 'Color', col(i,:))
     end
 
     ylim([0.0, 1.0])

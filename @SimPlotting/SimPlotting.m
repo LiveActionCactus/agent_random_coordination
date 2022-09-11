@@ -31,6 +31,8 @@ classdef SimPlotting < handle
 
         plotAgentPaths(obj, num_plots, labels);       % plot agent paths in sim env
         plotRenStochMat(obj);
+        plotIterCommGraph(obj);
+
     end
 
 end % SIMPLOTTING

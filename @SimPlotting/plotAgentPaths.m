@@ -12,6 +12,7 @@ function plotAgentPaths(obj, num_plots, labels)
 %
 
     plot_itrs = (obj.sim_env.sim_itrs / num_plots) .* [1:num_plots];
+    col = lines(obj.sim_env.numAgents);
     
     % Triangle is beginning of path
     % Square is end of path
@@ -23,7 +24,7 @@ function plotAgentPaths(obj, num_plots, labels)
         hold on
 
         for i = 1:obj.sim_env.numAgents
-            h = plot( data{i,j}(2,:), data{i,j}(3,:), '-*', 'MarkerSize', 3 );
+            h = plot( data{i,j}(2,:), data{i,j}(3,:), '-*', 'MarkerSize', 3, 'Color', col(i,:) );
             plot( data{i,j}(2,1), data{i,j}(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color )
             plot( data{i,j}(2,end), data{i,j}(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
         end
