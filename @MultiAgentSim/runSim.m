@@ -18,12 +18,13 @@ function runSim(obj)
         % run steps in a single simulation
         for n = 1:obj.N
             obj.n = n;
+            obj.comms.undirectedCommsUpdate(n);
             
             for k = 1:obj.numAgents
-                obj.agents{1,k}.runAgent(n)
+                obj.agents{1,k}.runAgent(n)     % update agent dynamics last
             end
        
-            obj.comms.undirectedCommsUpdate(n);
+            %obj.comms.undirectedCommsUpdate(n);
         end % end for step in sim size
 
         % Print simple multi-start sim status

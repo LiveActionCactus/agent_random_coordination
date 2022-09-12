@@ -13,11 +13,11 @@ function plotIterCommGraph(obj)
     axis([0 10 0 10])
     
     ax2 = subplot(2, 2, 2, "Parent", fig);
+    %title("Communication graph at current step")
     axis([-1 1 -1 1])
-    title("Communication graph at current step")
 
     ax3 = subplot(2,2, 4, "Parent", fig);
-    title("Union of previous communication graphs")
+    %title("Union of previous communication graphs")
     axis([-1 1 -1 1])
 
     hold on
@@ -57,27 +57,46 @@ function plotIterCommGraph(obj)
             end
         end
 
-        % TODO: plot comms circles around agents when in comms; visualize
-        % when communicating to troubleshoot issues
-
         drawnow
 
+        % TODO: plot comms circles around agents when in comms; visualize
+        % when communicating to troubleshoot issues
+        udist_mat = obj.sim_env.comms.comms_data.udist_mat{1,j};
+        %disp(obj.sim_env.comms.comms_data.udist_mat{1,j})
+        ugraph_mask = (triu( (obj.sim_env.comms.comms_data.udist_mat{1,j} <= obj.sim_env.agents{1,k}.comms.dist), 1) );
+        %disp(ugraph_mask)
+        [row, col, v] = find(ugraph_mask);
+        %fprintf("(%i, %i) \n\n", row, col);
+        
         % plot current comms graph (ASSUMES SYMMETRIC ADJ MATRIX)
         axes(ax2)
         adj = obj.sim_env.comms.comms_data.adj_mat{1,j};
         G = graph(adj);
         cla(ax2)
         plot(G, "XData", g_vert(:,1), "YData", g_vert(:,2), "NodeColor", "b", "EdgeColor", "r")
+        title("Communication graph at current step")
         
         % plot union comms graph
         axes(ax3)
         union_g = obj.sim_env.comms.comms_data.uunion_graph{2,j};
-        disp(union_g)
+        %disp(union_g)
         Gu = graph(union_g);
         cla(ax3)
         plot(Gu, "XData", g_vert(:,1), "YData", g_vert(:,2), "NodeColor", "b", "EdgeColor", "r");
+        title("Union of previous communication graphs")
 
         fprintf("Sim step %i \n", j)
+
+        fprintf("A1: (%f, %f); A2: (%f,%f); A3: (%f,%f); A4: (%f,%f) \n", ...
+            sim_data.state{1,1}(2,j), sim_data.state{1,1}(3,j), ...
+            sim_data.state{2,1}(2,j), sim_data.state{2,1}(3,j), ...
+            sim_data.state{3,1}(2,j), sim_data.state{3,1}(3,j), ...
+            sim_data.state{4,1}(2,j), sim_data.state{4,1}(3,j))
+        fprintf("distance matrix \n")
+        disp(udist_mat)
+        fprintf("adjacency matrix \n")
+        disp(adj)
+
         %disp(obj.sim_env.comms.comms_data.uunion_graph{2,j})
         fprintf("--- \n")
         pause()

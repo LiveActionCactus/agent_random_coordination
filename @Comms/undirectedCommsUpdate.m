@@ -4,6 +4,7 @@ function undirectedCommsUpdate(obj, itr)
 
     comms_dist = obj.sim_env.agents{1,1}.comms.dist;
     agent_posns = formatAgentPosns(obj);
+    assignin("base","agent_posns",agent_posns)
 
     diag_num_agents = eye( length(agent_posns) );       % repeated operation on matrix diagonal
     
