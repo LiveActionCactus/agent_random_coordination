@@ -55,24 +55,27 @@ function plotRenStochMat(obj)
     x = linspace(0, length(est_state)-1, length(est_state));
 
     col = lines(obj.sim_env.numAgents);
+
     figure()
     hold on
     
     for i = 1:obj.sim_env.numAgents
-        plot(x, est_state(i,:), 'Color', col(i,:))
+        plot(x, est_state(i,:), "LineStyle", "--", "Marker", "o", "MarkerSize", 5, 'Color', col(i,:), "DisplayName", string(i))
     end
 
+    legend
+
     ylim([0.0, 1.0])
-    xlim([0.0, 200.0])
+    xlim([0.0, (rs_trees(1,plot_trees)*2.0)])
     grid on
     
     % NEED 100% TREES CONVERAGE OR ELSE THESE INDICES DONT LINE UP
     for k=1:plot_trees
-        xline(rs_trees(1,k), "-.", "stree")                     % for 1st sim iteration
+        xline(rs_trees(1,k), "-.", "stree", 'HandleVisibility','off')    % for 1st sim iteration
     end
      
     title(obj.sim_env.boundary(1,2) + "x" + obj.sim_env.boundary(2,2) + " bounds; " + obj.sim_env.numAgents + " agents; " + plot_trees + " spanning trees")
     xlabel("Sim step")
-    ylabel("Information value")
+    ylabel("Information state")
 
 end % end plotRenStochMat()

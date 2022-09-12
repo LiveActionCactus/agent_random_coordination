@@ -1,4 +1,4 @@
-function plotAgentPaths(obj, num_plots, labels)
+function plotAgentPaths(obj, num_plots, label_fig)
 %PLOTAGENTPATHS plots specified number of figures, each representing a
 %different run of the simulation and the paths the agents followed.
 %
@@ -23,14 +23,17 @@ function plotAgentPaths(obj, num_plots, labels)
         figure()
         hold on
 
+        labels = {};
         for i = 1:obj.sim_env.numAgents
-            h = plot( data{i,j}(2,:), data{i,j}(3,:), '-*', 'MarkerSize', 3, 'Color', col(i,:) );
-            plot( data{i,j}(2,1), data{i,j}(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color )
-            plot( data{i,j}(2,end), data{i,j}(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color )
+            h = plot( data{i,j}(2,:), data{i,j}(3,:), '-*', 'MarkerSize', 3, 'Color', col(i,:), "DisplayName", string(i) );
+            plot( data{i,j}(2,1), data{i,j}(3,1), '-^', 'Color', h.Color, 'MarkerFaceColor', h.Color, 'HandleVisibility','off' )
+            plot( data{i,j}(2,end), data{i,j}(3,end), '-s', 'Color', h.Color, 'MarkerFaceColor', h.Color, 'HandleVisibility','off' )
         end
 
-        if isequal(labels, 1)
-            title("Agent trajectories -- Sim itr: " + plot_itrs(1,k) + " Sim steps: " + obj.sim_env.N)
+        legend('location','northeastoutside')
+
+        if isequal(label_fig, 1)
+            title("Agent trajectories -- Sim itr: " + plot_itrs(1,k) + "; Sim steps: " + obj.sim_env.N)
         end
     end
 
