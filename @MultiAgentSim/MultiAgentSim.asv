@@ -23,9 +23,9 @@ classdef MultiAgentSim < handle
         n = NaN;                  % current simulation time step
         N = NaN;                  % total steps in simulation
         sim_itrs = NaN;           % number of simulations to run if multi-starting the sim; use to gain meta-data
-        sim_itrs_data = struct();    % TODO: each sim iteration should have its complete data stored by the simulation instance. A plotting class can act on it later
-        plotting = NaN;           % object of SimPlotting class
-        comms = NaN;              % object of Comms class
+        sim_itrs_data = {};    % TODO: each sim iteration should have its complete data stored by the simulation instance. A plotting class can act on it later
+        plotting = NaN            % object of SimPlotting class
+        comms_data = 
 
     end % properties
 
@@ -53,7 +53,6 @@ classdef MultiAgentSim < handle
             obj.numAgents = numAgents;
             obj.initializeAgents();             % stores Agent objects to first row of obj.agents
             obj.initializePlotting();           % creates SimPlotting object
-            obj.initializeComms();              % creates Comms object
         
         end % end MultiAgentSim constructor
         

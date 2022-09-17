@@ -1,6 +1,14 @@
 function init_pos = squareInitPos(bounds, rounding)
 %SQUAREINITIALPOS static function that defines a random initial condition
 %(x,y) that lies on the parameter of a square.
+%
+% --Inputs--
+% bounds : vector of vertices defining the enclosed sim boundary
+% rounding : precision of "init_pos" output
+%
+% --Outputs--
+% obj : object of simulation environment
+%
 
     % https://matlab.fandom.com/wiki/FAQ#Why_is_0.3_-_0.2_-_0.1_.28or_similar.29_not_equal_to_zero.3F
 
@@ -23,9 +31,4 @@ function init_pos = squareInitPos(bounds, rounding)
 
     init_pos = floor(init_pos) + floor( (init_pos-floor(init_pos))/rounding) * rounding; % rounds all values to "rounding" variable
 
-    % if initial position is a vertex of the space, re-run (avoids
-    % numerical issues)
-%     if ismembertol(init_pos, bounds, 10e-04)
-%         init_pos = MultiAgentSim.squareInitPos(bounds, rounding);
-%     end
-end
+end % end squareInitPos()
