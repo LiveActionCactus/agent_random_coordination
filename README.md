@@ -4,7 +4,7 @@ Multi-agent simulation to study emergent connected communications graphs. Each a
 Run the simulation in MATLAB via: `simple_comm_by_opportunity`
 
 ##### Simulation
-![demo](media/agents_sim.gif | width=400 height=400)
+<img src="media/agents_sim.gif" width="400" height="400">
 
 ##### Estimation convergence
-![est_img](media/sim_est.png | width=400 height=400)
+<img src="media/sim_est.png" width="400" height="400">
