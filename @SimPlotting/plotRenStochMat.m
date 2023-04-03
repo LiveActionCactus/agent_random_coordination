@@ -1,5 +1,5 @@
 function plotRenStochMat(obj)
-%UNTITLED7 Summary of this function goes here
+%PLOTRENSTOCHMAT Summary of this function goes here
 %   Detailed explanation goes here
     
     plot_trees = 1; %10;
@@ -22,6 +22,12 @@ function plotRenStochMat(obj)
     per_res = (length(rs_trees) / obj.sim_env.sim_itrs) * 100;
     fprintf("%i%% sim runs have at least %i spanning trees \n", per_res, plot_trees)
     
+    %
+    %
+    %
+
+    % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
+    % REAL-TIME PLOT
     figure()
     hold on
 
@@ -33,6 +39,8 @@ function plotRenStochMat(obj)
         title("Sim steps to " + i + " spanning tree(s)")
     end
 
+    % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
+    % REAL-TIME PLOT
     % Plot hists in one figure
     figure()
     hold on
@@ -48,6 +56,10 @@ function plotRenStochMat(obj)
     title("Sim steps until spanning tree for " + plot_trees + " trees (Sim itrs = " + obj.sim_env.sim_itrs + " N = " + obj.sim_env.N + ")")
     xlabel("Sim steps")
     ylabel("Occurances")
+    
+    %
+    %
+    %
 
     % Plot convergence of average consesus law acting on estimated states
     est_state_log = obj.sim_env.sim_itrs_data.est_state;
@@ -69,7 +81,7 @@ function plotRenStochMat(obj)
     xlim([0.0, (rs_trees(1,plot_trees)*2.0)])
     grid on
     
-    % NEED 100% TREES CONVERAGE OR ELSE THESE INDICES DONT LINE UP
+    % NEED 100% TREES CONVERGENCE OR ELSE THESE INDICES DONT LINE UP
     for k=1:plot_trees
         xline(rs_trees(1,k), "-.", "stree", 'HandleVisibility','off')    % for 1st sim iteration
     end

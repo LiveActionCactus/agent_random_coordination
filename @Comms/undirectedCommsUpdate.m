@@ -1,10 +1,10 @@
 function undirectedCommsUpdate(obj, itr)
-%UNTITLED3 generates an nxn distance matrix and mask based on homogeneous
+%UNDIRECTEDCOMMSUPDATE generates an nxn distance matrix and mask based on homogeneous
 %communication capabilities of the agents, given 2xn position matrix.
 
     comms_dist = obj.sim_env.agents{1,1}.comms.dist;
     agent_posns = formatAgentPosns(obj);
-    assignin("base","agent_posns",agent_posns)
+    %assignin("base","agent_posns",agent_posns)
 
     diag_num_agents = eye( length(agent_posns) );       % repeated operation on matrix diagonal
     
@@ -17,6 +17,6 @@ function undirectedCommsUpdate(obj, itr)
     obj.comms_data.adj_mat{1,itr} = adj_mat;
     obj.comms_data.deg_mat{1,itr} = deg_mat;
 
-    calcRenStochConv(obj, itr);
+    calcRenStochConv(obj, itr);             % TODO: THIS SHOULD ONLY BE RUN IF FLAGGED
 
 end % end undirectedCommsUpdate

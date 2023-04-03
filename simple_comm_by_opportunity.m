@@ -3,7 +3,7 @@
 %
 % By: Patrick Ledzian
 % Created: 13 July 2022
-% Last edit: 17 July 2022
+% Last edit: 02 April 2023
 
 %% TODO
 % -1) double check paper to make sure Ren is implemented correctly
@@ -30,7 +30,7 @@ testSim.runSim();
 testSim.plotting.plotAgentPaths(1, 1);     % num_plots; labels
 testSim.plotting.plotRenStochMat();
 
-testSim.plotting.plotIterCommGraph();
+testSim.plotting.plotIterCommGraph();      % real-time plotting for demonstrations
 
 
 

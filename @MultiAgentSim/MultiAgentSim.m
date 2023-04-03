@@ -62,7 +62,6 @@ classdef MultiAgentSim < handle
         resetAgents(obj);
         runSim(obj);
         storeAgentData(obj, i);
-        plotSimStepDistanceComms(obj);           % TODO: put into communications class (or remove?)
 
     end % end methods
     
