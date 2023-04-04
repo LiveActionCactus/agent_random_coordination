@@ -21,6 +21,7 @@ function runSim(obj)
             obj.comms.undirectedCommsUpdate(n);
             
             for k = 1:obj.numAgents
+                obj.agents{1,k}.updateMap(n);
                 obj.agents{1,k}.runAgent(n)     % update agent dynamics last    %TODO: THIS DOESN'T SEEM RIGHT, WE SHOULD UPDATE DYNAMICS FIRST THEN DO ALL THE PROPERTIES UPDATES...
             end
        

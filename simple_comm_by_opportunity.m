@@ -30,7 +30,7 @@ testSim.runSim();
 testSim.plotting.plotAgentPaths(1, 1);     % num_plots; labels
 testSim.plotting.plotRenStochMat();
 
-testSim.plotting.plotIterCommGraph();      % real-time plotting for demonstrations
+%testSim.plotting.plotIterCommGraph();      % real-time plotting for demonstrations
 
 
 

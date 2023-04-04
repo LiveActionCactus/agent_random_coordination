@@ -9,7 +9,11 @@ classdef Agent < handle
 
     properties
         sim_env = NaN;       % handle to simulation environment object all agents live in       
-        id = NaN;            % integer id of each agent (1, inf)        
+        id = NaN;            % integer id of each agent (1, inf)
+        map = struct( ...
+            'scale', floor(1.0), ...  % standard map via matrix indices assumes dist between latice points is 1.0; scale this for more precision
+            'map', [] ...             % lattice where points store "surveilled" state information [0,1] (least -> most informed)
+            );             
         comms = struct( ...
             'dist', 2.0, ...    % communication radius
             'in_comm', NaN ...  % container.Map; 1 -- in comms, 0 -- not
@@ -48,6 +52,7 @@ classdef Agent < handle
 
             obj.setInitialEst();
             obj.setInitialPos();
+            obj.initializeMap();
             obj.genHeadingAngle(0.1);
             obj.findEndpoint();
         
@@ -58,6 +63,7 @@ classdef Agent < handle
         genHeadingAngle(obj, rounding);       % generates new random heading angle for agent, sets head_ang property of Agent object
         findEndpoint(obj);                    % uses agent position and random heading to find endpoint of linear trajectory, sets x_e
         runAgent(obj, sim_itr);               % updates agent dynamics / behaviors based on simulation iteration
-        
+        updateMapOnMove(obj, sim_itr);        % updates map based off comms
+
     end % methods
 end % class
