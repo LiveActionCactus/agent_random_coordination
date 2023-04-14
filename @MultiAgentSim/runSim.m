@@ -15,16 +15,25 @@ function runSim(obj)
     % run multi-start simulation loop
     for i = 1:obj.sim_itrs
         
+        obj.initializeAgents();             % reset agents for sim run
+        
+        %TODO: need to run all of this once w/ initialization and then
+        %iterate in the sim loop
         % run steps in a single simulation
         for n = 1:obj.N
             obj.n = n;
             obj.comms.undirectedCommsUpdate(n);
             
-            for k = 1:obj.numAgents
-                obj.agents{1,k}.updateMap(n);
-                obj.agents{1,k}.runAgent(n)     % update agent dynamics last    %TODO: THIS DOESN'T SEEM RIGHT, WE SHOULD UPDATE DYNAMICS FIRST THEN DO ALL THE PROPERTIES UPDATES...
+            for k = 1:obj.numAgents             % we need to update all of the agents' individual information states before decision making
+                obj.agents{1,k}.updateMap(n);   % populate maps based off individual agent dynamics
             end
-       
+
+            obj.updateMapViaComms(n);           % update agent maps based off comms graph; map update via comms w/ other agents
+
+            for k = 1:obj.numAgents
+                obj.agents{1,k}.runAgent(n)     % update agent dynamics last; boundary or in-comms update  %TODO: THIS DOESN'T SEEM RIGHT, WE SHOULD UPDATE DYNAMICS FIRST THEN DO ALL THE PROPERTIES UPDATES...
+            end
+
             %obj.comms.undirectedCommsUpdate(n);
         end % end for step in sim size
 
@@ -34,8 +43,7 @@ function runSim(obj)
             fprintf("Sim %i%% Complete \n", per)
         end
         
-        obj.storeAgentData(i);
-        obj.initializeAgents();
+        obj.storeAgentData(i);      % store state information between sim restarts
     
     end % end "sim_itrs"-times multi-start simulations
 

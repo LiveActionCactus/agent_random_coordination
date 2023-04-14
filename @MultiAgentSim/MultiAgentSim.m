@@ -62,6 +62,7 @@ classdef MultiAgentSim < handle
         resetAgents(obj);
         runSim(obj);
         storeAgentData(obj, i);
+        updateMapViaComms(obj, n);
 
     end % end methods
     

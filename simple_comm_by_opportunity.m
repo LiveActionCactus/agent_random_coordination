@@ -32,8 +32,6 @@ testSim.plotting.plotRenStochMat();
 
 %testSim.plotting.plotIterCommGraph();      % real-time plotting for demonstrations
 
-
-
 disp('Done')
 
 

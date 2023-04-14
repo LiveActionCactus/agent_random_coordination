@@ -19,10 +19,9 @@ function updateMap(obj, n)
     posx = obj.state(2,1);                      % x position
     posy = obj.state(3,1);                      % y position 
     s_dist = obj.comms.dist;                % circular sensing region radius
-    prev_map = obj.map.map{1,n};            % TODO: need to actually choose previous map; map w/ out most recent move; each lattice point in [0, 1.0] (least -> most info)
+    prev_map = obj.map.map{1,n};            % map w/ out most recent move; each lattice point in [0, 1.0] (least -> most info)
     disp('prev map')
-    disp(n)
-    disp(size(prev_map))
+    disp(size)
     disp(prev_map)
     upd_map  = zeros(size(prev_map));       % map information only from most recent move
     scale = obj.map.scale;                  % lattice quantization; dist between each adjacent lattice point
@@ -56,7 +55,6 @@ function updateMap(obj, n)
     disp(decayed_map)
     disp('upd map')
     disp(upd_map)
-    pause()
     new_map = max(upd_map, decayed_map);                              
     
     obj.map.map{1,n} = new_map;             % update stored map
