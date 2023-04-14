@@ -22,44 +22,46 @@ function plotRenStochMat(obj)
     per_res = (length(rs_trees) / obj.sim_env.sim_itrs) * 100;
     fprintf("%i%% sim runs have at least %i spanning trees \n", per_res, plot_trees)
     
-    %
-    %
-    %
-
-    % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
-    % REAL-TIME PLOT
-    figure()
-    hold on
-
-    for i = 1:plot_trees
-        subplot(2,5,i)
-        hist(rs_trees(:,i), 60)
-        xlabel("Sim steps")
-        ylabel("Occurances")
-        title("Sim steps to " + i + " spanning tree(s)")
-    end
-
-    % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
-    % REAL-TIME PLOT
-    % Plot hists in one figure
-    figure()
-    hold on
-    
-    for i = 1:plot_trees
-        if isequal(mod(i,2), 0)
-            histogram(rs_trees(:,i), 60, 'FaceColor','red','EdgeColor','red', 'FaceAlpha', 0.7);
-        else
-            histogram(rs_trees(:,i), 60, 'FaceColor','blue','EdgeColor','blue');
-        end
-    end
-
-    title("Sim steps until spanning tree for " + plot_trees + " trees (Sim itrs = " + obj.sim_env.sim_itrs + " N = " + obj.sim_env.N + ")")
-    xlabel("Sim steps")
-    ylabel("Occurances")
-    
-    %
-    %
-    %
+    % TODO: reintegrate the histograms later w/ flagged options as sim
+    % inputs
+%     %
+%     %
+%     %
+% 
+%     % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
+%     % REAL-TIME PLOT
+%     figure()
+%     hold on
+% 
+%     for i = 1:plot_trees
+%         subplot(2,5,i)
+%         hist(rs_trees(:,i), 60)
+%         xlabel("Sim steps")
+%         ylabel("Occurances")
+%         title("Sim steps to " + i + " spanning tree(s)")
+%     end
+% 
+%     % TODO: DON'T PLOT UNLESS MULTIPLE SIM ITRS; MUTUALLY EXCLUSIVE W/
+%     % REAL-TIME PLOT
+%     % Plot hists in one figure
+%     figure()
+%     hold on
+%     
+%     for i = 1:plot_trees
+%         if isequal(mod(i,2), 0)
+%             histogram(rs_trees(:,i), 60, 'FaceColor','red','EdgeColor','red', 'FaceAlpha', 0.7);
+%         else
+%             histogram(rs_trees(:,i), 60, 'FaceColor','blue','EdgeColor','blue');
+%         end
+%     end
+% 
+%     title("Sim steps until spanning tree for " + plot_trees + " trees (Sim itrs = " + obj.sim_env.sim_itrs + " N = " + obj.sim_env.N + ")")
+%     xlabel("Sim steps")
+%     ylabel("Occurances")
+%     
+%     %
+%     %
+%     %
 
     % Plot convergence of average consesus law acting on estimated states
     est_state_log = obj.sim_env.sim_itrs_data.est_state;

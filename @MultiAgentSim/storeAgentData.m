@@ -13,6 +13,7 @@ function storeAgentData(obj, i)
     for k = 1:obj.numAgents
         obj.sim_itrs_data.state{k,i} = obj.agents{1,k}.state_log;        % store Agents info for prev sim run
         obj.sim_itrs_data.est_state{k,i} = obj.agents{1,k}.est_state_log;
+        obj.sim_itrs_data.info_map_2d{k,i} = obj.agents{1,k}.map.map;
     end
 
     obj.sim_itrs_data.comms{1,i} = obj.comms.comms_data;                

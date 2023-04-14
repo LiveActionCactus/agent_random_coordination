@@ -10,9 +10,11 @@ boundx = max(obj.sim_env.boundary(1,:));
 boundy = max(obj.sim_env.boundary(1,:));
 
 obj.map.map = cell(1,obj.sim_env.N);                                           % TODO: i think this works, but not certain; need to initialize all maps to 0
-for i = 1:obj.sim_env.N
-    obj.map.map{1,i} = zeros((boundx*obj.map.scale)+1, (boundy*obj.map.scale)+1);  % +1 bc bounds are [0,bound] and map is [1, bound]
-end
+obj.map.map{1,1} = zeros((boundx*obj.map.scale)+1, (boundy*obj.map.scale)+1);
+
+% for i = 1:obj.sim_env.N
+%     obj.map.map{1,i} = zeros((boundx*obj.map.scale)+1, (boundy*obj.map.scale)+1);  % +1 bc bounds are [0,bound] and map is [1, bound]
+% end
 %pause()
 
 end

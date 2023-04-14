@@ -1,6 +1,6 @@
 function updateMapViaComms(obj, n)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%UPDATEMAPVIACOMMS union each agent's locally stored information map with
+%all other agents currently in communication with it.
 
     % update map based off communications               % TODO: possibly redundant
     for i = 1:obj.numAgents
@@ -17,7 +17,9 @@ function updateMapViaComms(obj, n)
             obj.agents{1,i}.map.map{1,n} = curr_map;         % update agent's stored map         % TODO: make logging a fcn of sim step for plotting
         end % end is the agent in comms
 
-        obj.agents{1,i}.comms.in_comm = 0;              % agent is no longer in comms
+        %obj.agents{1,i}.comms.in_comm = 0;              % agent is no
+        %longer in comms // HANDLED IN UNDIRECTEDCOMMSUPDATE()
+        
     end % end iterating over all agents
 
 end

@@ -1,11 +1,11 @@
 function plotIterCommGraph(obj)
-%PLOTITERCOMMGRAPH Summary of this function goes here
-%   Detailed explanation goes here
+%PLOTITERCOMMGRAPH plots each sim step of multi-agent simulation, shows the
+%communication graph at each step as well as the union of all previous
+%communication graphs in the simulation run.
 
     num_agents = obj.sim_env.numAgents;
     sim_len = obj.sim_env.n;
     sim_data = obj.sim_env.sim_itrs_data;
-
 
     fig = figure();
 

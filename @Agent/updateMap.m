@@ -19,11 +19,13 @@ function updateMap(obj, n)
     posx = obj.state(2,1);                      % x position
     posy = obj.state(3,1);                      % y position 
     s_dist = obj.comms.dist;                % circular sensing region radius
-    prev_map = obj.map.map{1,n};            % TODO: need to actually choose previous map; map w/ out most recent move; each lattice point in [0, 1.0] (least -> most info)
-    disp('prev map')
-    disp(n)
-    disp(size(prev_map))
-    disp(prev_map)
+
+    if isequal(n,1)
+        prev_map = obj.map.map{1,n};            % TODO: need to actually choose previous map; map w/ out most recent move; each lattice point in [0, 1.0] (least -> most info)
+    else
+        prev_map = obj.map.map{1,n-1}; 
+    end    
+        
     upd_map  = zeros(size(prev_map));       % map information only from most recent move
     scale = obj.map.scale;                  % lattice quantization; dist between each adjacent lattice point
     decay = obj.map.decay_rt;               % rate of information decay
@@ -32,18 +34,16 @@ function updateMap(obj, n)
     % left)
     search_lx = floor( max((posx - s_dist)*scale, env_lx) );            
     search_ly = floor( max((posy - s_dist)*scale, env_ly) );            
-    search_ux = ceil( min((posx + s_dist)*scale, (env_ux)) );         % Note: dealing with matlab idx @ 1
+    search_ux = ceil( min((posx + s_dist)*scale, (env_ux)) );
     search_uy = ceil( min((posy + s_dist)*scale, (env_uy)) );
     
     % update map; search bottom-to-top and left-to-right
-    
-    %fprintf("curx %d, cury %d, lx %d, ly %d, ux %d, uy %d \n", posx, posy, search_lx, search_ly, search_ux, search_uy);
     for x = search_lx:search_ux                                 
         for y = search_ly:search_uy
             dist = sqrt( (x-posx)^2 + (y-posy)^2 );
             if dist <= s_dist
-                my = env_uy - y + 1;
-                mx = x + 1;
+                my = env_uy - y + 1;                    % Note: dealing with matlab idx @ 1
+                mx = x + 1;                             % Note: dealing with matlab idx @ 1
                 upd_map(my,mx) = 1.0;      
             end  
         end
@@ -52,12 +52,12 @@ function updateMap(obj, n)
     % update comms for single agent; based of decayed historical info &
     % kinematics
     decayed_map = prev_map.*decay;
-    disp('decayed map')
-    disp(decayed_map)
-    disp('upd map')
-    disp(upd_map)
-    pause()
+%     disp('decayed map')
+%     disp(decayed_map)
+%     disp('upd map')
+%     disp(upd_map)
+%     pause()
     new_map = max(upd_map, decayed_map);                              
     
-    obj.map.map{1,n} = new_map;             % update stored map
+    obj.map.map{1,n} = new_map;             % store new information map at step n
 end

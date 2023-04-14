@@ -28,9 +28,10 @@ clc
 testSim = MultiAgentSim(4, 50, 1);     % n agents; steps in sim; num sims
 testSim.runSim();
 testSim.plotting.plotAgentPaths(1, 1);     % num_plots; labels
-testSim.plotting.plotRenStochMat();
 
+testSim.plotting.plotRenStochMat();        % plot information convergence (also contains histograms)
 %testSim.plotting.plotIterCommGraph();      % real-time plotting for demonstrations
+testSim.plotting.plotIter2DInfoMap();
 
 disp('Done')
 

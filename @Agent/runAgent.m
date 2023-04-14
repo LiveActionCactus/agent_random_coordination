@@ -22,18 +22,18 @@ function runAgent(obj, sim_itr)
     x_new = round(x_new, 2);                    % enforce precision requirements for numerical issues
     
     if bounds(1,1) <= x_new(1,1) && x_new(1,1) <= bounds(1,2) && bounds(2,1) <= x_new(2,1) && x_new(2,1) <= bounds(2,2)
-        % check if agent is in comms with other agents, need to share maps
+        % check if agent in comms with other agents, change heading if reqd
         if 1 % inComms() and comms_heading_change
-            ;
+            ;               % TODO: change agent heading to low info area
         end
         
         % update dynamics via vehicle kinematics
-        obj.state(2:3, 1) = x_new;  
+        obj.state(2:3, 1) = x_new;
 
     else
         % TODO: carry distance information through the reflection off
         % boundary instead of cutting traj off
-        obj.state(2:3, 1) = obj.traj.x_e;                        
+        obj.state(2:3, 1) = obj.traj.x_e;           % functionally producing a dynamics update for step n+1         
         obj.traj.x_o = obj.traj.x_e;
         if isempty(x)
             error('x empty')

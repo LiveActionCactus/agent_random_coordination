@@ -20,9 +20,9 @@ function undirectedCommsUpdate(obj, itr)
     adj_check = sum(adj_mat, 2);            % if agent in comms row vec 
     for k = 1:obj.sim_env.numAgents
         if adj_check(k) > 0
-            obj.sim_env.agents{1,k}.comms.in_comm = 1;
+            obj.sim_env.agents{1,k}.comms.in_comm = 1;          % in comms
         else
-            obj.sim_env.agents{1,k}.comms.in_comm = 0;
+            obj.sim_env.agents{1,k}.comms.in_comm = 0;          % not in comms
         end % end check if agent in comms
     end % end loop over agents
 

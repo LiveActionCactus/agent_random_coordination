@@ -43,6 +43,9 @@ function runSim(obj)
             fprintf("Sim %i%% Complete \n", per)
         end
         
+        % TODO: this should be written to a .mat file to reduce runtime
+        % overhead; also provides some level of fault tolerance if 
+        % something crashes
         obj.storeAgentData(i);      % store state information between sim restarts
     
     end % end "sim_itrs"-times multi-start simulations
